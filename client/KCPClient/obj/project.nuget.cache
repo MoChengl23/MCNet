@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "/JjoqucN16/LuT0mblNYR8uH2i0KsSA3lmeiCio05XQVa27KHOttMZhVxAU9p7DMyFUBpBhh3Tlfchab1N3zow==",
+  "success": true,
+  "projectFilePath": "D:\\1\\Net\\client\\kcpClient\\KCPClient.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\92072\\.nuget\\packages\\google.protobuf\\4.0.0-rc2\\google.protobuf.4.0.0-rc2.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\kcp\\2.0.0\\kcp.2.0.0.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\system.memory\\4.5.2\\system.memory.4.5.2.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.17\\microsoft.netcore.app.host.win-x64.3.1.17.nupkg.sha512"
+  ],
+  "logs": []
+}

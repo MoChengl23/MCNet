@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "I5GRqk0F2VcIifF7YX/9BAaeHfo+9+gSeP4RO97AJi+GdrKof/yfw0WwTPD0Pzp4tlLQEwOKMBsnoIGz4X4xiA==",
+  "success": true,
+  "projectFilePath": "D:\\1\\Net\\client\\KCPNET\\KCPNET.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\92072\\.nuget\\packages\\google.protobuf\\3.18.0\\google.protobuf.3.18.0.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\kcp\\2.0.0\\kcp.2.0.0.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\system.numerics.vectors\\4.4.0\\system.numerics.vectors.4.4.0.nupkg.sha512",
+    "C:\\Users\\92072\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+  ],
+  "logs": []
+}
