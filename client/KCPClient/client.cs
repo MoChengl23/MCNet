@@ -6,6 +6,7 @@ using System.Threading;
 using System.Text;
 using KCPNET;
 using System.Threading.Tasks;
+using Pb;
 
 
 
@@ -64,10 +65,10 @@ namespace KCPClient
             while(true){
                 await Task.Delay(5000);
                 if(clientSession != null && clientSession.session != null){
-                    clientSession.session.SendMessage(new Msg{
-                        name = "test",
+                    clientSession.session.SendMessage(new PbMessage{
+                        Name = "ping_test",                        
                     });
-                    Console.WriteLine("send kcp");
+                    // Console.WriteLine("send kcp");
                 }
                 else
                     break;

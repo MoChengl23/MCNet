@@ -61,11 +61,6 @@ namespace KCPNET
                                 //收到多余的服务器udp消息
                             }
                             else{
-                                foreach(var i in result.Buffer){
-                                    Console.Write(i + " ");
-                                }
-                                Console.WriteLine(" ");
-
                                 //c#默认是小端存放数据，go默认大端。因此需要将数据反转
                                 byte[] bytes = new byte[4];
                                 Array.Copy(result.Buffer, 4, bytes, 0, 4);
@@ -78,6 +73,7 @@ namespace KCPNET
                                 //此时已收到服务器对于kcp的ack，将remote从UDP端口改成KCP端口
                                 remotePoint = new IPEndPoint(IPAddress.Parse(serverIp), 6666);
                                 session = new T();
+                                
                                 session.InitSession(sid, udp,remotePoint);
                             }
                         }

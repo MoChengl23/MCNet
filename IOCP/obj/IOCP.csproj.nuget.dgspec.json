@@ -1,30 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "D:\\1\\Net\\client\\KCPNET\\KCPNET.csproj": {}
+    "D:\\1\\Net\\IOCP\\IOCP.csproj": {}
   },
   "projects": {
-    "D:\\1\\Net\\client\\KCPNET\\KCPNET.csproj": {
+    "D:\\1\\Net\\IOCP\\IOCP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\1\\Net\\client\\KCPNET\\KCPNET.csproj",
-        "projectName": "KCPNET",
-        "projectPath": "D:\\1\\Net\\client\\KCPNET\\KCPNET.csproj",
+        "projectUniqueName": "D:\\1\\Net\\IOCP\\IOCP.csproj",
+        "projectName": "IOCP",
+        "projectPath": "D:\\1\\Net\\IOCP\\IOCP.csproj",
         "packagesPath": "C:\\Users\\92072\\.nuget\\packages\\",
-        "outputPath": "D:\\1\\Net\\client\\KCPNET\\obj\\",
+        "outputPath": "D:\\1\\Net\\IOCP\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\92072\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "netstandard2.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netstandard2.0": {
-            "targetAlias": "netstandard2.0",
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -35,24 +35,8 @@
         }
       },
       "frameworks": {
-        "netstandard2.0": {
-          "targetAlias": "netstandard2.0",
-          "dependencies": {
-            "Google.Protobuf": {
-              "target": "Package",
-              "version": "[3.18.0, )"
-            },
-            "Kcp": {
-              "target": "Package",
-              "version": "[2.0.0, )"
-            },
-            "NETStandard.Library": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
-            }
-          },
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -63,6 +47,11 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }

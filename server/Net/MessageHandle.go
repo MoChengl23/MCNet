@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"server/face"
+	// "google.golang.org/protobuf"
 )
 
 type MessageHandle struct {
@@ -12,6 +13,12 @@ type MessageHandle struct {
 }
 
 func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
+	// mes := pb.Message{}
+	// if err := protobuf.Unmarshal(request.GetMessage(), mes); err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// fmt.Println(mes)
 	request.GetSession().SendMessage(request.GetMessage())
 
 }
@@ -31,7 +38,7 @@ func (messageHandle *MessageHandle) StartOneWorker(workerID int, taskQueue chan 
 		}
 	}
 }
-func (messageHandle *MessageHandle) SendMessageToTaskQueue(request face.IRequest) {
+func (messageHandle *MessageHandle) AddToTaskQueue(request face.IRequest) {
 	workerID := request.GetSession().GetSid() % 10
 	messageHandle.TaskQueue[workerID] <- request
 

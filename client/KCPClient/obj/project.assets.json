@@ -164,21 +164,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\1\\Net\\client\\kcpClient\\KCPClient.csproj",
+      "projectUniqueName": "D:\\1\\Net\\client\\KCPClient\\KCPClient.csproj",
       "projectName": "KCPClient",
-      "projectPath": "D:\\1\\Net\\client\\kcpClient\\KCPClient.csproj",
+      "projectPath": "D:\\1\\Net\\client\\KCPClient\\KCPClient.csproj",
       "packagesPath": "C:\\Users\\92072\\.nuget\\packages\\",
-      "outputPath": "D:\\1\\Net\\client\\kcpClient\\obj\\",
+      "outputPath": "D:\\1\\Net\\client\\KCPClient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\92072\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\92072\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -216,18 +214,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[3.1.17, 3.1.17]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.7.21379.14\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

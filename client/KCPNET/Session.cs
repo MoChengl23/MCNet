@@ -49,49 +49,32 @@ namespace KCPNET
             };
             m_handle.Recv += buffer =>
             {
-                
-
-                
-                Console.WriteLine("触发handle.recv");
-                Console.WriteLine(Encoding.UTF8.GetString(buffer));
-                // ReadFromPb(buffer);
-                // var a = SendByPb();
-                // udp.SendAsync(a, a.Length,new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7777));
+                if(buffer != null){
+                    PbMessage pbMessage = ByteToPb(buffer);
+                    OnReceiveMessage(pbMessage); 
+                }
+                               
             };
             Task.Run(Update);
         }
-        /// <summary>
-        /// 将二进制数据转化成protobuf格式
-        /// 且一定要用try
-        /// </summary>
-        /// <param name="bytes"></param>
-        // void ReadFromPb(byte[] bytes)
-        // {
-        //     try{
-        //         var person = new Student{};
-        //         var me = Student.Parser.ParseFrom(bytes);
-        //         Console.WriteLine(me);
-        //     }
-        //     catch(Exception e)
-        //     {
-                
-        //     }
-            
-           
-        // }
-
-
-        /// <summary>
-        /// 将protobuf结构体的形式转化成bytes
-        /// </summary>
-        /// <returns></returns>
-        byte[] PbToByte(T msg)
+    
+        PbMessage  ByteToPb(byte[] bytes)
+        {
+            PbMessage pbMessage = new PbMessage();
+            try{
+                pbMessage = PbMessage.Parser.ParseFrom(bytes);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return pbMessage;
+        }
+        byte[] PbToByte(PbMessage pbMessage)
         {
             byte[] bytes = new byte[128];
             try{
-                var pbMessage = new PbMessage{
-                    Name = msg.name,
-                };
+               
                 
                 CodedOutputStream output  = new CodedOutputStream(bytes);
                 pbMessage.WriteTo(output);
@@ -99,7 +82,7 @@ namespace KCPNET
             }
             catch(Exception e)
             {
-                
+                Console.WriteLine(e.ToString());
             }
             return bytes;
             
@@ -114,49 +97,14 @@ namespace KCPNET
         /// 规定，如果发送长度为1的byte，表示玩家进入对局，长度为2表示玩家退出对局
         /// </summary>
         /// <param name="msg"></param>
-        public void SendMessage(T msg){
+        public void SendMessage(PbMessage msg){
             
             if(IsConnected)
                 m_kcp.Send(PbToByte(msg));
-                //  m_kcp.Send(new byte[]{1});
+             
         }
 
 
-        // async public void ServerReceive()
-        // {
-        //     //我是服务器,我接受udp的端口是6666,我发射的端口随机
-            
-            
-        //     UdpReceiveResult result;
-        //     while(true)
-        //     {
-              
-        //         result = await udp.ReceiveAsync();
-        //          byte[] bytes = result.Buffer.AsSpan().ToArray();
-        //         //  for(int i=0;i<bytes.Length;i++)
-        //         // {
-        //         //    Console.Write(bytes[i]+ " ");
-        //         // }
-        //         // Console.WriteLine(BitConverter.ToUInt32(result.Buffer, 0) );
-                
-        //         // Console.WriteLine(result.RemoteEndPoint);
-        //         if(!isConnected)
-        //         {
-        //             InitSession(3, result.RemoteEndPoint);
-        //             isConnected = true;
-        //         }
-        //         else
-        //         {
-                    
-        //             m_kcp.Input(result.Buffer.AsSpan());
-                 
-                 
-              
-
-        //         }
-                
-        //     }
-        // }
         
     async public void Update()
         {
@@ -164,33 +112,37 @@ namespace KCPNET
             {
                 while (true)
                 {
-
-                        m_kcp.Update(DateTime.UtcNow);
-                        int len;
-                        do
-                        {
-                           
+                    DateTime now = DateTime.Now;
+                    OnUpdate(now);
+                    m_kcp.Update(DateTime.UtcNow);
+                    int len;
+                    do
+                    {
                             var (buffer, avalidSzie) = m_kcp.TryRecv();
                             len = avalidSzie;
                             if (buffer != null)
                             {
-                              
-                                
                                 var temp = new byte[len];
                                 buffer.Memory.Span.Slice(0, len).CopyTo(temp);
                                 m_handle.Receive(temp);
                             }
-                        } while (len > 0);
+                    } while (len > 0);
                     
-                        await Task.Delay(10);
+                    await Task.Delay(10);
                     
                 }
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(e.ToString());
             }
         }
+
+    protected abstract void OnReceiveMessage(PbMessage pbMessage);
+    protected abstract void OnConnected();
+    protected abstract void OnUpdate(DateTime now);
+
+    protected abstract void OnDisConnected();
 
     
 

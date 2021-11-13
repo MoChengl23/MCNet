@@ -71,7 +71,7 @@ func (session *Session) StartReader() {
 			session: session,
 			conn:    session.GetConnection(),
 		}
-		session.messageHandle.SendMessageToTaskQueue(&request)
+		session.messageHandle.AddToTaskQueue(&request)
 
 		session.isAlive <- true
 	}
@@ -79,8 +79,6 @@ func (session *Session) StartReader() {
 }
 
 func (session *Session) SendMessage(data []byte) {
-	// session.RLoc()
-
 	session.messageChan <- data
 }
 
