@@ -5,26 +5,5 @@ option go_package = "./pb";
 // this is a comment
 message PbMessage {
   string name = 1;
-  enum CMD{
-    Ping = 0;
-    ChatMessage = 1;
-  }
-
-
-
-
-
-
-
-
-  message Destination{
-    int32 x = 1;
-    int32 y = 2;
-  }
-  message Command{
-    repeated int32 UnitId = 1;
-     
-  }
-
+ 
 }
-// protoc --c_sharp_out=./ person.proto

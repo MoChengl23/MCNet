@@ -14,10 +14,12 @@ using Pb;
 
 
 
+
 namespace KCPNET
 {
-    public abstract class Session<T>
-    where T: Msg , new(){
+    public abstract class Session
+    // where T: ProtobufTool , new()
+    {
 
         private enum State{
             DisConnected,
@@ -45,12 +47,12 @@ namespace KCPNET
             m_handle.Out  += buffer =>
             {
                 byte[] bytes = buffer.ToArray();
-                udp.SendAsync(bytes, bytes.Length, remotePoint);       
+                udp.SendAsync(bytes, buffer.Length, remotePoint);       
             };
-            m_handle.Recv += buffer =>
+            m_handle.Recv = (byte[] buffer) =>
             {
                 if(buffer != null){
-                    PbMessage pbMessage = ByteToPb(buffer);
+                    PbMessage pbMessage = ProtobufTool.ByteToPb(buffer);
                     OnReceiveMessage(pbMessage); 
                 }
                                
@@ -58,36 +60,7 @@ namespace KCPNET
             Task.Run(Update);
         }
     
-        PbMessage  ByteToPb(byte[] bytes)
-        {
-            PbMessage pbMessage = new PbMessage();
-            try{
-                pbMessage = PbMessage.Parser.ParseFrom(bytes);
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            return pbMessage;
-        }
-        byte[] PbToByte(PbMessage pbMessage)
-        {
-            byte[] bytes = new byte[128];
-            try{
-               
-                
-                CodedOutputStream output  = new CodedOutputStream(bytes);
-                pbMessage.WriteTo(output);
-          
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            return bytes;
-            
-        }
-
+       
 
         public void ReceiveData(byte[] bytes){
             m_kcp.Input(bytes.AsSpan());
@@ -100,7 +73,7 @@ namespace KCPNET
         public void SendMessage(PbMessage msg){
             
             if(IsConnected)
-                m_kcp.Send(PbToByte(msg));
+                m_kcp.Send(ProtobufTool.PbToByte(msg));
              
         }
 

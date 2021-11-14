@@ -16,14 +16,14 @@ namespace KCPClient
 {
     class Client
     {
-        static KCPNet<ClientSession,Msg> clientSession;
+        static KCPNet<ClientSession> clientSession;
         static Task<bool> checkTask;
         
         static void Main(string[] args)
         {
             string ip = "127.0.0.1";
             
-            clientSession = new KCPNet<ClientSession,Msg>();
+            clientSession = new KCPNet<ClientSession>();
             clientSession.StartClient(ip,7777);
             checkTask =  clientSession.ConnectServer(200,5000);
             Task.Run(ConnectServer);

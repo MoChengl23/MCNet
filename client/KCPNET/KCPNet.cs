@@ -8,9 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace KCPNET
 {
-    public class KCPNet <T,K> 
-    where T:Session<K>, new()
-    where K:Msg, new()
+    public class KCPNet <T> 
+    where T:Session, new()
+    // where K:Msg, new()
     {
         UdpClient udp;
         string serverIp;

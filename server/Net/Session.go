@@ -58,9 +58,12 @@ func (session *Session) StartReader() {
 	defer session.Stop()
 
 	for {
-		buf := make([]byte, 512)
+		buf := make([]byte, 256)
 
-		_, err := session.kcpSession.Read(buf)
+		n, err := session.kcpSession.Read(buf)
+		//只截取有效数据部分
+		buf = buf[:n]
+
 		if err != nil {
 			fmt.Println("session read data failed!!")
 			continue

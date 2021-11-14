@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net"
 	"server/face"
-	// "google.golang.org/protobuf"
+	"server/pb"
+
+	"google.golang.org/protobuf/proto"
 )
 
 type MessageHandle struct {
@@ -13,12 +15,13 @@ type MessageHandle struct {
 }
 
 func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
-	// mes := pb.Message{}
-	// if err := protobuf.Unmarshal(request.GetMessage(), mes); err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// fmt.Println(mes)
+	//测试下Pb能不能解码
+	mes := &pb.PbMessage{}
+	if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(mes)
+	//
 	request.GetSession().SendMessage(request.GetMessage())
 
 }

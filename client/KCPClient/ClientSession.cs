@@ -5,7 +5,7 @@ using System;
 
 namespace KCPClient
 {
-    public class ClientSession : Session<Msg> 
+    public class ClientSession : Session 
     {
         
         protected override void OnConnected() {
