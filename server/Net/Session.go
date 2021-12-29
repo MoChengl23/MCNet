@@ -12,7 +12,8 @@ import (
 
 type Session struct {
 	sid        uint32
-	roomId     uint32
+	inRoom     bool
+	room       face.IRoom
 	inGame     bool
 	kcpSession *kcp.UDPSession
 	address    string
@@ -26,10 +27,10 @@ type Session struct {
 
 func NewSession(messageHandle face.IMessageHandle, conn *kcp.UDPSession, sid uint32) face.ISession {
 	session := &Session{
-		sid:        sid,
-		roomId:     0, //记录对局中， 该玩家属于哪个间
-		kcpSession: conn,
-		// messageHandle: messageHandle,
+		sid:           sid,
+		room:          nil, //记录对局中， 该玩家属于哪个间
+		kcpSession:    conn,
+		inRoom:        false,
 		inGame:        false,
 		messageChan:   make(chan []byte),
 		messageHandle: messageHandle,
@@ -52,7 +53,6 @@ func (session *Session) CheckAlive() {
 	}
 }
 
-//规定，如果接受长度为1的byte，表示玩家进入对局，长度为2表示玩家退出对局
 func (session *Session) StartReader() {
 	fmt.Println("Session Start Read")
 	defer session.Stop()
@@ -66,7 +66,7 @@ func (session *Session) StartReader() {
 
 		if err != nil {
 			fmt.Println("session read data failed!!")
-			continue
+			break
 		}
 		fmt.Println(buf)
 		request := Request{
@@ -108,6 +108,7 @@ func (session *Session) Start() {
 
 func (session *Session) Stop() {
 	session.kcpSession.Close()
+	fmt.Println("session :", session.GetSid(), "STOP")
 
 	//通知从缓冲队列读数据的业务，该链接已经关闭
 	session.isAlive <- true
@@ -123,12 +124,15 @@ func (session *Session) GetConnection() net.Conn {
 func (session *Session) GetSid() uint32 {
 	return session.sid
 }
-func (session *Session) SetRoomId(roomId uint32) error {
-	session.roomId = roomId
-	return nil
+func (session *Session) SetRoom(room face.IRoom) {
+	session.room = room
 }
-func (session *Session) GetRoomId() uint32 {
-	return session.roomId
+func (session *Session) GetRoom() face.IRoom {
+	return session.room
+}
+
+func (session *Session) IsInRoom() bool {
+	return session.inRoom
 }
 
 func (session *Session) GetRemoteAddress() string {

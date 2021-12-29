@@ -1,0 +1,34 @@
+syntax = "proto3";
+package pb;
+option go_package = "./pb";
+
+// this is a comment
+message PbMessage {
+  string name = 1;
+  
+
+
+  enum CMD {
+    Login = 0;
+    match = 1;
+    matchConfirm = 2;
+  }
+  CMD cmd = 2;
+
+  
+  enum RoomState{
+    none = 0;
+    confirm = 1;
+    select = 2;
+    loadResource = 3;
+    fight = 4;
+    end = 5;
+  }
+  bool isRoomMessage = 3;
+  RoomState setRoomState = 4;
+
+  uint32 sid = 5;
+ 
+}
+
+// protoc --go_out=./ ./Protobuf.proto

@@ -31,3 +31,6 @@ D:\1\Net\client\KCPNET\obj\Debug\netstandard2.0\KCPNET.AssemblyInfo.cs
 D:\1\Net\client\KCPNET\obj\Debug\netstandard2.0\KCPNET.csproj.CoreCompileInputs.cache
 D:\1\Net\client\KCPNET\obj\Debug\netstandard2.0\KCPNET.dll
 D:\1\Net\client\KCPNET\obj\Debug\netstandard2.0\KCPNET.pdb
+D:\xunlei\Study\Assets\DLL\KCPNET.deps.json
+D:\xunlei\Study\Assets\DLL\KCPNET.dll
+D:\xunlei\Study\Assets\DLL\KCPNET.pdb

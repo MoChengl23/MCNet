@@ -15,6 +15,16 @@ func (request *Request) GetMessage() []byte {
 	return request.message
 }
 
+//发送回给自己
+func (request *Request) SendMessage(isInRoom bool) {
+	if isInRoom {
+		request.GetSession().GetRoom().Broadcast(request.message)
+	} else {
+		request.session.SendMessage(request.GetMessage())
+	}
+
+}
+
 func (request *Request) GetSession() face.ISession {
 	return request.session
 }

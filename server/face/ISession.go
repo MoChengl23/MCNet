@@ -9,8 +9,9 @@ type ISession interface {
 	Stop()
 	GetConnection() net.Conn
 	GetSid() uint32
-	SetRoomId(roomId uint32) error
-	GetRoomId() uint32
+	IsInRoom() bool
+	SetRoom(room IRoom)
+	GetRoom() IRoom
 	GetRemoteAddress() string
 	SendMessage(data []byte)
 }

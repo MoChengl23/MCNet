@@ -21,9 +21,16 @@ func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
 		fmt.Println(err)
 	}
 	fmt.Println(mes)
-	//
-	request.GetSession().SendMessage(request.GetMessage())
+	// if mes.IsRoomMessage{
+	// 	switch mes.SetRoomState{
+	// 	case pb.PbMessage_confirm:{
+	// 		request.SendMessage(true, )
+	// 	}
 
+	// 	}
+	// }
+
+	request.SendMessage(request.GetSession().IsInRoom())
 }
 func (messageHandle *MessageHandle) StartWorkerPool() {
 	for i := 0; i < int(messageHandle.WorkerPoolSize); i++ {

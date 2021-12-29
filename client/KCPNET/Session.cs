@@ -111,6 +111,10 @@ namespace KCPNET
             }
         }
 
+    public uint GetSid(){
+        return m_sid;
+    }
+
     protected abstract void OnReceiveMessage(PbMessage pbMessage);
     protected abstract void OnConnected();
     protected abstract void OnUpdate(DateTime now);
