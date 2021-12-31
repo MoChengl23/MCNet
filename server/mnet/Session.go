@@ -88,7 +88,6 @@ func (session *Session) SendMessage(data []byte) {
 func (session *Session) StartWriter() {
 	for {
 		select {
-
 		case data := <-session.messageChan:
 			if _, err := session.kcpSession.Write(data); err != nil {
 				fmt.Println("Send Data error:, ", err, " Conn Writer exit")

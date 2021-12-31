@@ -3,12 +3,10 @@ package face
 // import "mnet"
 
 type IRoom interface {
-	Start()
+	Init()
 	Stop()
 	Broadcast(data []byte)
-	GetState() int32
-	SetState(roomState int32)
+	GetState() IRoomState
+	// SetState(roomState  IRoomState)
 
-	JoinRoom(session ISession)
-	LeaveRoom(session ISession)
 }

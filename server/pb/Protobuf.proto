@@ -2,32 +2,79 @@ syntax = "proto3";
 package pb;
 option go_package = "./pb";
 
-// this is a comment
-message PbMessage {
+// this is a comment 
+message PlayerSelectData{
+    //具体的阵营选择还没写
+    int32 faction = 4;
+
+    bool isSelectDone = 5;
+    bool allSelectDone =6;
+
+  }
+
+  
+message PlayerData{
+    int32 playSid = 1;
+    int32 roomId = 2;
+    string playerName = 3;
+    int32 playerIndex = 4;
+    bool isConfirmed = 5;
+
+    PlayerSelectData playerSelectData= 6;
+    bool isReady = 7;
+
+    int32 loadPercent = 8;
+
+    bool isLoadResourceDone = 9;
+    
+  }
+message RoomPlayersData{
+   repeated PlayerData playerData = 1;
+   bool allConfirmed = 2;
+
+   bool allReady = 3;
+
+   bool allLoadResourceDone = 4;
+ }
+ 
+ message PbMessage {
   string name = 1;
   
 
-
+ CMD cmd = 2;
   enum CMD {
-    Login = 0;
+    clickLogin = 0;
     match = 1;
-    matchConfirm = 2;
+    roomInit = 2;
+    confirm = 3;
+    select = 4;
+    load = 5;
+    fightStart = 6;
   }
-  CMD cmd = 2;
+  enum Match{
+    joinMatch = 0;
+    quitMatch = 1;
+  }
+  Match cmdMatch = 8;
 
   
-  enum RoomState{
-    none = 0;
-    confirm = 1;
-    select = 2;
-    loadResource = 3;
-    fight = 4;
-    end = 5;
-  }
-  bool isRoomMessage = 3;
-  RoomState setRoomState = 4;
 
-  uint32 sid = 5;
+ 
+  PlayerData playerData = 3;
+
+
+
+
+ RoomPlayersData roomPlayersData = 4;
+
+ 
+
+
+
+  
+
+
+  uint32 sid = 7;
  
 }
 

@@ -5,21 +5,27 @@ import (
 	"fmt"
 	"net"
 	"server/face"
+	match "server/mnet/Match"
+	"server/mnet/room"
 	"sync"
 
 	"github.com/xtaci/kcp-go/v5"
 )
 
 type Server struct {
-	IP            string
-	UDPIP         string
-	sessionMap    map[uint32]face.ISession //存放所有玩家的连接
-	messageHandle face.IMessageHandle
-	sessionMux    sync.Mutex
-	roomMap       map[uint32]face.IRoom //存放所有房间
+	IP         string
+	UDPIP      string
+	sessionMap map[uint32]face.ISession //存放所有玩家的连接
+
+	sessionMux sync.Mutex
+	roomMap    map[uint32]face.IRoom //存放所有房间
 
 	roomNumber   uint32 //当前共有多少个房间
 	playerNumber uint32
+
+	messageHandle face.IMessageHandle
+	matchSystem   face.IMatchSystem
+	// roomSystem  face.IRoomSystem
 }
 
 func (server *Server) Start() {
@@ -96,6 +102,12 @@ func (server *Server) ListenKCP() {
 func (server *Server) Serve() {
 	server.Start()
 
+	server.messageHandle = NewMessageHandler(server)
+	server.messageHandle.Init()
+
+	server.matchSystem = match.NewMatchSystem(server)
+	server.matchSystem.Init()
+
 	select {}
 
 }
@@ -144,10 +156,17 @@ func (server *Server) GenerateUniqueSessionID() uint32 {
 // }
 
 //输入是房间创造者的sid，房间号=房主的sid
-func (server *Server) newRoom(roomid uint32, room face.IRoom) {
-	server.roomMap[roomid] = room
+func (server *Server) GenerateNewRoom(playerList [3]uint32) {
+	newRoom := room.NewRoom(server, playerList)
 
+	server.roomMap[playerList[0]] = newRoom
 }
+
+func (server *Server) SendMessageToClient(sid uint32, data []byte) {
+	server.sessionMap[sid].SendMessage(data)
+}
+
+// server.roomMap[roomId] = room
 
 // func (server *Server) LeaveRoom(roomId uint32, playerSid uint32) error {
 
@@ -172,6 +191,9 @@ func (server *Server) RoomRemove(roomId uint32) {
 	delete(server.roomMap, roomId)
 
 }
+func (server *Server) GetSession(sid uint32) face.ISession {
+	return server.sessionMap[sid]
+}
 
 //开局，暂时先这么写
 // func (server *Server) GameStart(roomId uint32, roomPlayers []uint32) error {
@@ -192,19 +214,27 @@ func (server *Server) RoomRemove(roomId uint32) {
 
 func NewServer() face.IServer {
 	server := &Server{
-		IP:            "0.0.0.0:6666",
-		UDPIP:         "0.0.0.0:7777",
-		messageHandle: NewMessageHandler(),
-		sessionMap:    make(map[uint32]face.ISession),
-		roomMap:       make(map[uint32]face.IRoom),
-		roomNumber:    0,
-		playerNumber:  1,
+		IP:    "0.0.0.0:6666",
+		UDPIP: "0.0.0.0:7777",
+		// messageHandle: NewMessageHandler(),
+		sessionMap:   make(map[uint32]face.ISession),
+		roomMap:      make(map[uint32]face.IRoom),
+		roomNumber:   0,
+		playerNumber: 1,
 	}
 	return server
 }
-func NewMessageHandler() *MessageHandle {
-	return &MessageHandle{
-		WorkerPoolSize: 10,
-		TaskQueue:      make([]chan face.IRequest, 10),
-	}
-}
+
+// func NewMessageHandler() *MessageHandle {
+// 	return &MessageHandle{
+
+// 		WorkerPoolSize:    10,
+// 		TaskQueue:         make([]chan face.IRequest, 10),
+// 		roomMessageHandle: &room.RoomMessageHandle{},
+// 	}
+// }
+
+// func NewRoomMessageHandle() *RoomMessageHandle {
+// 	return &RoomMessageHandle{}
+
+// }
