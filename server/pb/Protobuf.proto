@@ -72,7 +72,7 @@ message RoomPlayersData{
 
 
   
-
+  
 
   uint32 sid = 7;
  

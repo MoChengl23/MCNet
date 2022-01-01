@@ -5,7 +5,7 @@ type IServer interface {
 	Stop()
 	Serve()
 
-	GenerateNewRoom(players [3]uint32)
+	GenerateNewRoom(players [1]uint32)
 	GetMatchSystem() IMatchSystem
 	SendMessageToClient(sid uint32, data []byte)
 }

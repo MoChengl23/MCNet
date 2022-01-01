@@ -28,13 +28,14 @@ type Room struct {
 	stateId  RoomState
 	roomId   uint32
 	// playerSessions map[face.ISession]bool
-	players [3]uint32
+	players [1]uint32
 	// confirmArr []int32
 	// selectArr []int32
 	lock sync.Mutex
 }
 
 func (room *Room) Init() {
+	fmt.Println("New Room Init")
 	//Add StateMap
 	room.stateMap[roomStateConfirm] = &RoomStateConfirm{room, []bool{}}
 	room.stateMap[roomStateSelect] = &RoomStateSelect{room}
@@ -160,7 +161,7 @@ func (room *Room) GetState() face.IRoomState {
 
 // }
 
-func NewRoom(_server face.IServer, players [3]uint32) *Room {
+func NewRoom(_server face.IServer, players [1]uint32) *Room {
 	newRoom := &Room{
 		server:   _server,
 		stateMap: make(map[RoomState]face.IRoomState),

@@ -156,7 +156,7 @@ func (server *Server) GenerateUniqueSessionID() uint32 {
 // }
 
 //输入是房间创造者的sid，房间号=房主的sid
-func (server *Server) GenerateNewRoom(playerList [3]uint32) {
+func (server *Server) GenerateNewRoom(playerList [1]uint32) {
 	newRoom := room.NewRoom(server, playerList)
 
 	server.roomMap[playerList[0]] = newRoom

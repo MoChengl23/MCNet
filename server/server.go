@@ -1,17 +1,18 @@
 package main
 
-import "server/mnet"
+import (
+	"fmt"
+	"server/mnet"
+)
 
 // mnet "server/Net"
 
 func main() {
 
-	// a := new([]int)
-	// a[0] = 2
+	test := test{}
+	test.AddQueue()
+	fmt.Println(test.GetLen())
 
-	// for _, i := range a {
-	// 	fmt.Println(i)
-	// }
 	server := mnet.NewServer()
 	server.Serve()
 
