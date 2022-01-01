@@ -46,7 +46,7 @@ func (session *Session) CheckAlive() {
 		select {
 		case <-session.isAlive:
 
-		case <-time.After(time.Second * 20):
+		case <-time.After(time.Second * 999):
 			fmt.Println("Session die ")
 			return
 		}
@@ -68,12 +68,14 @@ func (session *Session) StartReader() {
 			fmt.Println("session read data failed!!")
 			break
 		}
+
 		fmt.Println(buf)
 		request := Request{
 			message: buf,
 			session: session,
 			conn:    session.GetConnection(),
 		}
+
 		session.messageHandle.AddToTaskQueue(&request)
 
 		session.isAlive <- true

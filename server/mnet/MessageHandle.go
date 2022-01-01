@@ -3,6 +3,7 @@ package mnet
 import (
 	"fmt"
 	"server/face"
+	match "server/mnet/Match"
 	"server/mnet/room"
 	"server/pb"
 
@@ -14,12 +15,16 @@ type MessageHandle struct {
 	WorkerPoolSize uint32
 	TaskQueue      []chan face.IRequest
 
-	matchSystem       face.IMatchSystem
-	roomMessageHandle face.IRoomMessageHandle
+	matchMessageHandle face.IMatchMessageHandle
+	roomMessageHandle  face.IRoomMessageHandle
 }
 
 func (messageHandle *MessageHandle) Init() {
+	fmt.Println("MessageHandle Init")
+	messageHandle.StartWorkerPool()
+	messageHandle.matchMessageHandle = match.NewMatchMessageHandle(messageHandle.server.GetMatchSystem())
 	messageHandle.roomMessageHandle = room.NewRoomMessageHandle(messageHandle)
+
 }
 
 func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
@@ -31,10 +36,10 @@ func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
 	}
 	fmt.Println(mes)
 
-	roomId := uint32(mes.PlayerData.RoomId)
+	roomId := uint32(1)
 	switch mes.Cmd {
 	case pb.PbMessage_match:
-		messageHandle.matchSystem.ResponseMatch(mes)
+		messageHandle.matchMessageHandle.ResponseMatch(mes)
 	case pb.PbMessage_confirm:
 		messageHandle.roomMessageHandle.ResponseConfirm(roomId, mes)
 	case pb.PbMessage_roomInit:
@@ -61,12 +66,15 @@ func (messageHandle *MessageHandle) StartOneWorker(workerID int, taskQueue chan 
 	for {
 		select {
 		case request := <-taskQueue:
+
 			messageHandle.DoMessageHandler(request)
 		}
 	}
 }
 func (messageHandle *MessageHandle) AddToTaskQueue(request face.IRequest) {
-	workerID := request.GetSession().GetSid() % 10
+
+	workerID := request.GetSession().GetSid() % messageHandle.WorkerPoolSize
+
 	messageHandle.TaskQueue[workerID] <- request
 
 }

@@ -5,7 +5,5 @@ import (
 )
 
 type IMatchMessageHandle interface {
-	ResponseMatch(roomId uint32, message *pb.PbMessage)
-
-
+	ResponseMatch(message *pb.PbMessage)
 }

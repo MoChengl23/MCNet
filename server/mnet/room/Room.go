@@ -45,38 +45,24 @@ func (room *Room) Init() {
 	//向玩家发送进入房间命令，和房间成员信息
 	mes := &pb.PbMessage{
 		Cmd: pb.PbMessage_roomInit,
-		RoomPlayersData: &pb.PbMessage_RoomPlayersData{
-			[]*pb.PbMessage_PlayerData{
-				
-					PlaySid:     1,
+		RoomPlayersData: &pb.RoomPlayersData{
+			PlayerData: []*pb.PlayerData{
+				{PlaySid: 1,
 					RoomId:      3,
 					PlayerName:  "mocheng",
 					PlayerIndex: 0,
 					IsConfirmed: false,
-					PlayerSelectData: &pb.PbMessage_PlayerSelectData{
+					PlayerSelectData: &pb.PlayerSelectData{
 						Faction:       1,
 						IsSelectDone:  false,
 						AllSelectDone: false,
 					},
-					IsReady:            false,
-					LoadPercent:        99,
+					IsReady: false,
+					// LoadPercent:        99,
 					IsLoadResourceDone: false,
-			
+				},
 			},
-			AllConfirmed:        false,
-			AllReady:            false,
-			AllLoadResourceDone: false,
 		},
-		// {
-		// []*pb.PbMessage_PlayerData{
-		// 	&pb.PbMessage_PlayerData{PlaySid: 1,RoomId: 1},
-		// },
-		// allConfirmed : false,
-		// allReady : fasle,
-		// allLoadResourceDone : false,
-
-		// },
-
 	}
 	if data, err := proto.Marshal(mes); err != nil {
 		fmt.Println(err)
@@ -116,7 +102,6 @@ func (room *Room) Stop() {
 // }
 
 func (room *Room) Broadcast(data []byte) {
-
 	for _, sid := range room.players {
 		room.server.SendMessageToClient(sid, data)
 	}

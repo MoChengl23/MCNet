@@ -1,14 +1,22 @@
 package match
 
 import (
+	"fmt"
 	"server/face"
 	"server/pb"
 )
 
 type MatchMessageHandle struct {
-	server face.IServer
+	matchSystem face.IMatchSystem
 }
 
-func (matchMessageHandle *MatchMessageHandle) ResponseMatch(roomId uint32, message *pb.PbMessage) {
+func (matchMessageHandle *MatchMessageHandle) ResponseMatch(message *pb.PbMessage) {
+	fmt.Println("a player join match", message.Sid)
+	matchMessageHandle.matchSystem.UpdateMatchQueue(message)
+}
 
+func NewMatchMessageHandle(matchSystem face.IMatchSystem) *MatchMessageHandle {
+	return &MatchMessageHandle{
+		matchSystem: matchSystem,
+	}
 }

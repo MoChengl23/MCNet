@@ -31,8 +31,7 @@ type Server struct {
 func (server *Server) Start() {
 	fmt.Println("Start Server")
 	//启动工作池
-	server.messageHandle.StartWorkerPool()
-
+	// server.messageHandle.Init()
 	go server.ListenUDP()
 
 	go server.ListenKCP()
@@ -56,8 +55,8 @@ func (server *Server) ListenUDP() {
 		if err != nil {
 			fmt.Println("receive UDP failed!!")
 		}
-		fmt.Println(remoteAddress)
-		fmt.Println(buf)
+		// fmt.Println(remoteAddress)
+		// fmt.Println(buf)
 		//这里的连接是本地（只有一个）的连接吗？如果是的话还需要把udp连接关闭，暂时还不知道怎么写
 		go func() {
 			if binary.BigEndian.Uint32(buf[:4]) == 0 {
@@ -65,10 +64,10 @@ func (server *Server) ListenUDP() {
 				//某个客户端申请连接,分配一个sid给它
 				buf := make([]byte, 4)
 				sid := server.GenerateUniqueSessionID()
-				fmt.Println(sid)
+				fmt.Println("UDPid", sid)
 				binary.BigEndian.PutUint32(buf, sid)
-				fmt.Println("unique sid ", buf)
-				fmt.Println(append([]byte{0, 0, 0, 0}, []byte(buf)...))
+				// fmt.Println("unique sid ", buf)
+				// fmt.Println(append([]byte{0, 0, 0, 0}, []byte(buf)...))
 				conn.WriteToUDP(append([]byte{0, 0, 0, 0}, []byte(buf)...), remoteAddress)
 
 			}
@@ -87,14 +86,14 @@ func (server *Server) ListenKCP() {
 		//监听是否有新的客户端连接
 		conn, err := kcplisten.AcceptKCP()
 		if err != nil {
-			fmt.Println("accept data failed!!")
+			fmt.Println("accept conn failed!!")
 			continue
 		}
 		server.AddNewSession(conn)
 
-		for a, b := range server.sessionMap {
-			fmt.Println(a, b)
-		}
+		// for a, b := range server.sessionMap {
+		// 	fmt.Println(a, b)
+		// }
 
 	}
 }
@@ -102,11 +101,11 @@ func (server *Server) ListenKCP() {
 func (server *Server) Serve() {
 	server.Start()
 
-	server.messageHandle = NewMessageHandler(server)
-	server.messageHandle.Init()
-
 	server.matchSystem = match.NewMatchSystem(server)
 	server.matchSystem.Init()
+
+	server.messageHandle = NewMessageHandler(server)
+	server.messageHandle.Init()
 
 	select {}
 
@@ -114,13 +113,14 @@ func (server *Server) Serve() {
 func (server *Server) AddNewSession(conn *kcp.UDPSession) {
 	sid := conn.GetConv()
 	if value, ok := server.sessionMap[sid]; ok {
-		fmt.Println(value)
+		fmt.Println("sdfgsdf", value)
 		delete(server.sessionMap, sid)
-		newSession := NewSession(server.messageHandle, conn, sid)
 
-		server.sessionMap[sid] = newSession
-		newSession.Start()
 	}
+	newSession := NewSession(server.messageHandle, conn, sid)
+	server.sessionMap[sid] = newSession
+	newSession.Start()
+
 	fmt.Println("a new session connect ")
 }
 
@@ -194,6 +194,9 @@ func (server *Server) RoomRemove(roomId uint32) {
 func (server *Server) GetSession(sid uint32) face.ISession {
 	return server.sessionMap[sid]
 }
+func (server *Server) GetMatchSystem() face.IMatchSystem {
+	return server.matchSystem
+}
 
 //开局，暂时先这么写
 // func (server *Server) GameStart(roomId uint32, roomPlayers []uint32) error {
@@ -222,6 +225,7 @@ func NewServer() face.IServer {
 		roomNumber:   0,
 		playerNumber: 1,
 	}
+	server.messageHandle = NewMessageHandler(server)
 	return server
 }
 

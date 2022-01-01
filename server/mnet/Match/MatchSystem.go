@@ -16,10 +16,10 @@ type MatchSystem struct {
 }
 
 func (match *MatchSystem) Init() {
-
+	fmt.Println("match System Init")
 }
 
-func (match *MatchSystem) ResponseMatch(message *pb.PbMessage) {
+func (match *MatchSystem) UpdateMatchQueue(message *pb.PbMessage) {
 	match.lock.Lock()
 	switch message.CmdMatch {
 	case pb.PbMessage_joinMatch:
@@ -34,7 +34,7 @@ func (match *MatchSystem) ResponseMatch(message *pb.PbMessage) {
 func (match *MatchSystem) EnterMatchQueue(sid uint32) {
 	match.lock.Lock()
 	match.matchQueue.PushBack(sid)
-	if match.matchQueue.Len() >= 3 {
+	if match.matchQueue.Len() >= 1 {
 		match.GenerateNewRoom()
 	}
 	match.lock.Unlock()
