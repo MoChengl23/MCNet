@@ -26,13 +26,13 @@ namespace Pb {
           string.Concat(
             "Cg5Qcm90b2J1Zi5wcm90bxICcGIiUAoQUGxheWVyU2VsZWN0RGF0YRIPCgdm",
             "YWN0aW9uGAQgASgFEhQKDGlzU2VsZWN0RG9uZRgFIAEoCBIVCg1hbGxTZWxl",
-            "Y3REb25lGAYgASgIImIKClNlbGVjdERhdGESDQoFaW5kZXgYASABKAUSEgoK",
-            "cGxheWVyTmFtZRgCIAEoCRIPCgdjaGF0TWVzGAMgASgJEg8KB2ZhY3Rpb24Y",
-            "BiABKAUSDwoHaXNSZWFkeRgHIAEoCCKPAwoJUGJNZXNzYWdlEgwKBG5hbWUY",
-            "ASABKAkSHgoDY21kGAIgASgOMhEucGIuUGJNZXNzYWdlLkNNRBIoCghjbWRN",
-            "YXRjaBgDIAEoDjIWLnBiLlBiTWVzc2FnZS5DbWRNYXRjaBImCgdjbWRSb29t",
-            "GAQgASgOMhUucGIuUGJNZXNzYWdlLkNtZFJvb20SIgoKc2VsZWN0RGF0YRgF",
-            "IAEoCzIOLnBiLlNlbGVjdERhdGESEwoLbG9hZFBlcmNlbnQYBiABKAUiJQoD",
+            "Y3REb25lGAYgASgIIlMKClNlbGVjdERhdGESEgoKcGxheWVyTmFtZRgCIAEo",
+            "CRIPCgdjaGF0TWVzGAMgASgJEg8KB2ZhY3Rpb24YBiABKAUSDwoHaXNSZWFk",
+            "eRgHIAEoCCKeAwoJUGJNZXNzYWdlEgwKBG5hbWUYASABKAkSHgoDY21kGAIg",
+            "ASgOMhEucGIuUGJNZXNzYWdlLkNNRBIoCghjbWRNYXRjaBgDIAEoDjIWLnBi",
+            "LlBiTWVzc2FnZS5DbWRNYXRjaBImCgdjbWRSb29tGAQgASgOMhUucGIuUGJN",
+            "ZXNzYWdlLkNtZFJvb20SDQoFaW5kZXgYBSABKAUSIgoKc2VsZWN0RGF0YRgG",
+            "IAEoCzIOLnBiLlNlbGVjdERhdGESEwoLbG9hZFBlcmNlbnQYByABKAUiJQoD",
             "Q01EEgkKBWxvZ2luEAASCQoFbWF0Y2gQARIICgRyb29tEAIiKAoIQ21kTWF0",
             "Y2gSDQoJam9pbk1hdGNoEAASDQoJcXVpdE1hdGNoEAEieAoHQ21kUm9vbRIL",
             "Cgdjb25maXJtEAASCgoGc2VsZWN0EAESDgoKc2VsZWN0RGF0ZRACEggKBGxv",
@@ -42,8 +42,8 @@ namespace Pb {
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Pb.PlayerSelectData), global::Pb.PlayerSelectData.Parser, new[]{ "Faction", "IsSelectDone", "AllSelectDone" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.SelectData), global::Pb.SelectData.Parser, new[]{ "Index", "PlayerName", "ChatMes", "Faction", "IsReady" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.PbMessage), global::Pb.PbMessage.Parser, new[]{ "Name", "Cmd", "CmdMatch", "CmdRoom", "SelectData", "LoadPercent" }, null, new[]{ typeof(global::Pb.PbMessage.Types.CMD), typeof(global::Pb.PbMessage.Types.CmdMatch), typeof(global::Pb.PbMessage.Types.CmdRoom) }, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.SelectData), global::Pb.SelectData.Parser, new[]{ "PlayerName", "ChatMes", "Faction", "IsReady" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.PbMessage), global::Pb.PbMessage.Parser, new[]{ "Name", "Cmd", "CmdMatch", "CmdRoom", "Index", "SelectData", "LoadPercent" }, null, new[]{ typeof(global::Pb.PbMessage.Types.CMD), typeof(global::Pb.PbMessage.Types.CmdMatch), typeof(global::Pb.PbMessage.Types.CmdRoom) }, null, null)
           }));
     }
     #endregion
@@ -353,7 +353,6 @@ namespace Pb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public SelectData(SelectData other) : this() {
-      index_ = other.index_;
       playerName_ = other.playerName_;
       chatMes_ = other.chatMes_;
       faction_ = other.faction_;
@@ -365,18 +364,6 @@ namespace Pb {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public SelectData Clone() {
       return new SelectData(this);
-    }
-
-    /// <summary>Field number for the "index" field.</summary>
-    public const int IndexFieldNumber = 1;
-    private int index_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int Index {
-      get { return index_; }
-      set {
-        index_ = value;
-      }
     }
 
     /// <summary>Field number for the "playerName" field.</summary>
@@ -442,7 +429,6 @@ namespace Pb {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Index != other.Index) return false;
       if (PlayerName != other.PlayerName) return false;
       if (ChatMes != other.ChatMes) return false;
       if (Faction != other.Faction) return false;
@@ -454,7 +440,6 @@ namespace Pb {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Index != 0) hash ^= Index.GetHashCode();
       if (PlayerName.Length != 0) hash ^= PlayerName.GetHashCode();
       if (ChatMes.Length != 0) hash ^= ChatMes.GetHashCode();
       if (Faction != 0) hash ^= Faction.GetHashCode();
@@ -477,10 +462,6 @@ namespace Pb {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Index != 0) {
-        output.WriteRawTag(8);
-        output.WriteInt32(Index);
-      }
       if (PlayerName.Length != 0) {
         output.WriteRawTag(18);
         output.WriteString(PlayerName);
@@ -507,10 +488,6 @@ namespace Pb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Index != 0) {
-        output.WriteRawTag(8);
-        output.WriteInt32(Index);
-      }
       if (PlayerName.Length != 0) {
         output.WriteRawTag(18);
         output.WriteString(PlayerName);
@@ -537,9 +514,6 @@ namespace Pb {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Index != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Index);
-      }
       if (PlayerName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerName);
       }
@@ -563,9 +537,6 @@ namespace Pb {
     public void MergeFrom(SelectData other) {
       if (other == null) {
         return;
-      }
-      if (other.Index != 0) {
-        Index = other.Index;
       }
       if (other.PlayerName.Length != 0) {
         PlayerName = other.PlayerName;
@@ -594,10 +565,6 @@ namespace Pb {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 8: {
-            Index = input.ReadInt32();
-            break;
-          }
           case 18: {
             PlayerName = input.ReadString();
             break;
@@ -629,10 +596,6 @@ namespace Pb {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 8: {
-            Index = input.ReadInt32();
-            break;
-          }
           case 18: {
             PlayerName = input.ReadString();
             break;
@@ -694,6 +657,7 @@ namespace Pb {
       cmd_ = other.cmd_;
       cmdMatch_ = other.cmdMatch_;
       cmdRoom_ = other.cmdRoom_;
+      index_ = other.index_;
       selectData_ = other.selectData_ != null ? other.selectData_.Clone() : null;
       loadPercent_ = other.loadPercent_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -753,8 +717,23 @@ namespace Pb {
       }
     }
 
+    /// <summary>Field number for the "index" field.</summary>
+    public const int IndexFieldNumber = 5;
+    private int index_;
+    /// <summary>
+    ///index代表在房间的索引
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Index {
+      get { return index_; }
+      set {
+        index_ = value;
+      }
+    }
+
     /// <summary>Field number for the "selectData" field.</summary>
-    public const int SelectDataFieldNumber = 5;
+    public const int SelectDataFieldNumber = 6;
     private global::Pb.SelectData selectData_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -766,7 +745,7 @@ namespace Pb {
     }
 
     /// <summary>Field number for the "loadPercent" field.</summary>
-    public const int LoadPercentFieldNumber = 6;
+    public const int LoadPercentFieldNumber = 7;
     private int loadPercent_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -796,6 +775,7 @@ namespace Pb {
       if (Cmd != other.Cmd) return false;
       if (CmdMatch != other.CmdMatch) return false;
       if (CmdRoom != other.CmdRoom) return false;
+      if (Index != other.Index) return false;
       if (!object.Equals(SelectData, other.SelectData)) return false;
       if (LoadPercent != other.LoadPercent) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -809,6 +789,7 @@ namespace Pb {
       if (Cmd != global::Pb.PbMessage.Types.CMD.Login) hash ^= Cmd.GetHashCode();
       if (CmdMatch != global::Pb.PbMessage.Types.CmdMatch.JoinMatch) hash ^= CmdMatch.GetHashCode();
       if (CmdRoom != global::Pb.PbMessage.Types.CmdRoom.Confirm) hash ^= CmdRoom.GetHashCode();
+      if (Index != 0) hash ^= Index.GetHashCode();
       if (selectData_ != null) hash ^= SelectData.GetHashCode();
       if (LoadPercent != 0) hash ^= LoadPercent.GetHashCode();
       if (_unknownFields != null) {
@@ -845,12 +826,16 @@ namespace Pb {
         output.WriteRawTag(32);
         output.WriteEnum((int) CmdRoom);
       }
+      if (Index != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Index);
+      }
       if (selectData_ != null) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(50);
         output.WriteMessage(SelectData);
       }
       if (LoadPercent != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(56);
         output.WriteInt32(LoadPercent);
       }
       if (_unknownFields != null) {
@@ -879,12 +864,16 @@ namespace Pb {
         output.WriteRawTag(32);
         output.WriteEnum((int) CmdRoom);
       }
+      if (Index != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Index);
+      }
       if (selectData_ != null) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(50);
         output.WriteMessage(SelectData);
       }
       if (LoadPercent != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(56);
         output.WriteInt32(LoadPercent);
       }
       if (_unknownFields != null) {
@@ -908,6 +897,9 @@ namespace Pb {
       }
       if (CmdRoom != global::Pb.PbMessage.Types.CmdRoom.Confirm) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) CmdRoom);
+      }
+      if (Index != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Index);
       }
       if (selectData_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(SelectData);
@@ -938,6 +930,9 @@ namespace Pb {
       }
       if (other.CmdRoom != global::Pb.PbMessage.Types.CmdRoom.Confirm) {
         CmdRoom = other.CmdRoom;
+      }
+      if (other.Index != 0) {
+        Index = other.Index;
       }
       if (other.selectData_ != null) {
         if (selectData_ == null) {
@@ -979,14 +974,18 @@ namespace Pb {
             CmdRoom = (global::Pb.PbMessage.Types.CmdRoom) input.ReadEnum();
             break;
           }
-          case 42: {
+          case 40: {
+            Index = input.ReadInt32();
+            break;
+          }
+          case 50: {
             if (selectData_ == null) {
               SelectData = new global::Pb.SelectData();
             }
             input.ReadMessage(SelectData);
             break;
           }
-          case 48: {
+          case 56: {
             LoadPercent = input.ReadInt32();
             break;
           }
@@ -1021,14 +1020,18 @@ namespace Pb {
             CmdRoom = (global::Pb.PbMessage.Types.CmdRoom) input.ReadEnum();
             break;
           }
-          case 42: {
+          case 40: {
+            Index = input.ReadInt32();
+            break;
+          }
+          case 50: {
             if (selectData_ == null) {
               SelectData = new global::Pb.SelectData();
             }
             input.ReadMessage(SelectData);
             break;
           }
-          case 48: {
+          case 56: {
             LoadPercent = input.ReadInt32();
             break;
           }

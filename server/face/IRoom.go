@@ -15,12 +15,14 @@ type IRoom interface {
 	Init()
 	Delete()
 	Broadcast(data []byte)
-	// BroadcastByte(data []byte)
+	SendIndex()
+
 	ChangeRoomState(newState int)
 	ChangePlayersRoomId()
 	GetState() IRoomState
 	GetStateId() int
 	GetPlayerIndex(sid uint32) int
+	SetSelectData(selectArr []int)
 
 	GetRoomPlayerCount() int
 	GetRoomId() uint32

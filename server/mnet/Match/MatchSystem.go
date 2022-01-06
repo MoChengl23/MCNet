@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"fmt"
 	"server/face"
+	"server/mnet/room"
 	"server/pb"
 	"sync"
 )
@@ -11,8 +12,8 @@ import (
 type MatchSystem struct {
 	server     face.IServer
 	matchQueue list.List
-
-	lock *sync.Mutex
+	matchlen   int
+	lock       *sync.Mutex
 }
 
 func (match *MatchSystem) Init() {
@@ -45,7 +46,7 @@ func (match *MatchSystem) EnterMatchQueue(sid uint32) {
 	mes := pb.MakeJoinMatch()
 	match.server.SendMessageToClient(sid, mes)
 
-	if match.matchQueue.Len() >= 3 {
+	if match.matchQueue.Len() >= match.matchlen {
 		match.GenerateNewRoom()
 	}
 
@@ -66,14 +67,15 @@ func (match *MatchSystem) QuitMatchQueue(sid uint32) {
 
 func (match *MatchSystem) GenerateNewRoom() {
 	match.lock.Lock()
-	roomPlayers := new([3]uint32)
-	for i := 0; i < 3; i++ {
+	roomPlayers := make([]uint32, match.matchlen)
+	for i := 0; i < match.matchlen; i++ {
 		sid := match.matchQueue.Front().Value.(uint32)
 		roomPlayers[i] = sid
 		match.matchQueue.Remove(match.matchQueue.Front())
 	}
-	
-	match.server.GenerateNewRoom(*roomPlayers)
+	newRoom := room.NewRoom(match.server, roomPlayers)
+	newRoom.Init()
+
 	match.lock.Unlock()
 
 }
@@ -83,9 +85,9 @@ func (match *MatchSystem) Update() {
 }
 func NewMatchSystem(_server face.IServer) *MatchSystem {
 	return &MatchSystem{
-		server: _server,
-		// matchQueue: *list.New(),
-		lock: new(sync.Mutex),
+		server:   _server,
+		matchlen: 2,
+		lock:     new(sync.Mutex),
 	}
 
 }

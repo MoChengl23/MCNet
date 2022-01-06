@@ -60,31 +60,30 @@ func (session *Session) StartReader() {
 	defer session.Stop()
 
 	for {
-		buf := make([]byte, 256)
+		buf := make([]byte, 4096)
 
 		n, err := session.kcpSession.Read(buf)
 		//只截取有效数据部分
-		buf = buf[:n]
 
 		if err != nil {
 			fmt.Println("session read data failed!!")
 			return
 		}
-
+		fmt.Println("New Request")
 		request := &Request{
-			message: buf,
+			message: buf[:n],
 			session: session,
 			sid:     session.sid,
 			roomId:  session.roomId,
 		}
-
-		session.messageHandle.AddToTaskQueue(request)
 		fmt.Println("New Request")
 		mes := &pb.PbMessage{}
 		if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println("收到的信息是 ", mes, mes.Cmd)
+		session.messageHandle.AddToTaskQueue(request)
+
 		session.isAlive <- true
 	}
 

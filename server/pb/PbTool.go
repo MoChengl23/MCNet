@@ -43,11 +43,18 @@ func MakeQuitMatch() []byte {
 
 //client 发给server: Cmd,CmdRoom: PbMessage_confirm, sid
 
-func MakeRoomConfirmMessage(roomId uint32) []byte {
+func MakeRoomConfirmMessage() []byte {
 	mes := &PbMessage{
 		Cmd:     PbMessage_room,
 		CmdRoom: PbMessage_confirm,
-		// RoomId:  roomId,
+	}
+	return Byte(mes)
+}
+func MakeRoomIndex(index int32) []byte {
+	mes := &PbMessage{
+		Cmd:     PbMessage_room,
+		CmdRoom: PbMessage_confirm,
+		Index: index,
 	}
 	return Byte(mes)
 }
@@ -73,4 +80,8 @@ func MakeRoomSelectMessage() []byte {
 		CmdRoom: PbMessage_select,
 	}
 	return Byte(mes)
+}
+
+func MakeRoomSelectData(mes *PbMessage){
+
 }

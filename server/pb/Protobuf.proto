@@ -14,7 +14,7 @@ message PlayerSelectData{
 
   
 message SelectData{
-    int32 index = 1;
+
     string playerName = 2;
     
     string chatMes = 3;
@@ -33,12 +33,14 @@ message SelectData{
     
   }
   CMD cmd = 2;
-enum CmdMatch{
+
+  enum CmdMatch{
     joinMatch = 0;
     quitMatch = 1;
    
   }
   CmdMatch cmdMatch = 3;
+
   enum CmdRoom{
     
     confirm = 0;
@@ -51,17 +53,19 @@ enum CmdMatch{
     fightData = 6;
     dismissed = 7;
   }
-  
- 
-  
   CmdRoom cmdRoom = 4;
+  //index代表在房间的索引
+  int32 index = 5;
+ 
+  
+  
 
   
 
  
-  SelectData selectData = 5;
+  SelectData selectData = 6;
 
- int32 loadPercent = 6;
+  int32 loadPercent = 7;
 
   
  

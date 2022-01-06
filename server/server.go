@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"server/mnet"
 )
 
@@ -9,9 +8,9 @@ import (
 
 func main() {
 
-	test := test{}
-	test.AddQueue()
-	fmt.Println(test.GetLen())
+	// test := test{}
+	// test.AddQueue()
+	// fmt.Println(test.GetLen())
 
 	server := mnet.NewServer()
 	server.Serve()

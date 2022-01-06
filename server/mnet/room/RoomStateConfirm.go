@@ -17,14 +17,16 @@ type RoomStateConfirm struct {
 
 func (state *RoomStateConfirm) Enter() {
 	for i := 0; i < state.room.GetRoomPlayerCount(); i++ {
-		state.confirmArr = append(state.confirmArr, false)
+		state.confirmArr[i] = false
 	}
 
 	state.room.ChangePlayersRoomId()
-	mes := pb.MakeRoomConfirmMessage(state.room.GetRoomId())
+	mes := pb.MakeRoomConfirmMessage()
 	//向玩家发送进入房间命令，和房间成员信息
 
 	state.room.Broadcast(mes)
+	state.room.SendIndex()
+
 
 	state.CheckTimeLimit()
 
@@ -43,7 +45,7 @@ func (state *RoomStateConfirm) Exit() {
 func (state *RoomStateConfirm) Update(sid uint32, mes *pb.PbMessage) {
 	index := state.room.GetPlayerIndex(sid)
 	state.confirmArr[index] = true
-	fmt.Println("当前确认信息： ", sid, index)
+
 	if state.CheckAllConfirm() {
 
 		state.room.ChangeRoomState(int(roomStateSelect))
@@ -61,15 +63,6 @@ func (state *RoomStateConfirm) CheckTimeLimit() {
 
 }
 
-// func (state *RoomStateConfirm) ReachTimeLimit() {
-// 	mes := &pb.PbMessage{
-// 		Cmd: pb.PbMessage_confirm,
-// 		RoomPlayersData: &pb.RoomPlayersData{
-// 			IsDismissed: true,
-// 		},
-// 	}
-
-// }
 func (state *RoomStateConfirm) CheckAllConfirm() bool {
 
 	for _, i := range state.confirmArr {

@@ -56,6 +56,7 @@ func (messageHandle *MessageHandle) ResponseLogin(sid uint32) {
 
 }
 
+
 func (messageHandle *MessageHandle) StartWorkerPool() {
 	for i := 0; i < int(messageHandle.WorkerPoolSize); i++ {
 		messageHandle.TaskQueue[i] = make(chan face.IRequest)
@@ -68,17 +69,20 @@ func (messageHandle *MessageHandle) StartOneWorker(workerID int, taskQueue chan 
 	for {
 		select {
 		case request := <-taskQueue:
+
 			messageHandle.DoMessageHandler(request)
 		}
 	}
-
 }
 func (messageHandle *MessageHandle) AddToTaskQueue(request face.IRequest) {
 
 	workerID := request.GetSession().GetSid() % messageHandle.WorkerPoolSize
 	fmt.Println("AddTaskQueue  ", workerID)
-	messageHandle.TaskQueue[workerID] <- request
-	fmt.Println("AddTaskQueue  ", workerID)
+	// workerID = uint32(rand.Intn(10))
+	// fmt.Println("AddTaskQueue  ", workerID)
+	// messageHandle.TaskQueue[workerID] <- request
+	//消息队列有bug，先暂时这么处理
+	go messageHandle.DoMessageHandler(request)
 
 }
 

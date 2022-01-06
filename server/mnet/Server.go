@@ -152,22 +152,10 @@ func (server *Server) GenerateUniqueSessionID() uint32 {
 // }
 
 //输入是房间创造者的sid，房间号=房主的sid
-func (server *Server) GenerateNewRoom(playerList [3]uint32) {
-	fmt.Println("RoomPlayer有谁")
-	for _, i := range playerList {
-		fmt.Println(i)
-	}
+func (server *Server) GenerateNewRoom(playerList []uint32) {
+
 	newRoom := room.NewRoom(server, playerList)
 	fmt.Println(newRoom.GetRoomId())
-
-	fmt.Println("roomMap")
-	for i := range server.roomMap {
-		fmt.Println(i)
-	}
-	fmt.Println("sessionMap")
-	for i := range server.sessionMap {
-		fmt.Println(i)
-	}
 
 }
 

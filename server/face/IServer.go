@@ -5,7 +5,7 @@ type IServer interface {
 	Stop()
 	Serve()
 
-	GenerateNewRoom(players [3]uint32)
+	GenerateNewRoom(players []uint32)
 	GetRoom(roomId uint32) IRoom
 	AddRoom(roomId uint32, room IRoom)
 

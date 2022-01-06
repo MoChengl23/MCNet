@@ -3,6 +3,7 @@ package room
 import (
 	"fmt"
 	"server/face"
+	"server/pb"
 
 	// "server/mnet"
 	"sync"
@@ -29,8 +30,9 @@ type Room struct {
 	stateId  RoomState
 	roomId   uint32
 	// playerSessions map[face.ISession]bool
-	playersid      [3]uint32
-	playSelectData []SelectData
+	playersid []uint32
+	selectArr []int
+	// playSelectData []SelectData
 	// selectArr []int32
 	lock sync.Mutex
 }
@@ -39,10 +41,11 @@ func (room *Room) Init() {
 	room.server.AddRoom(room.roomId, room)
 
 	fmt.Println("New Room Init")
+	length := len(room.playersid)
 	//Add StateMap
-	room.stateMap[roomStateConfirm] = &RoomStateConfirm{room, []bool{}}
-	room.stateMap[roomStateSelect] = &RoomStateSelect{room, []bool{}}
-	// room.stateMap[roomStateLoadResource] = &RoomStateLoadResource{room}
+	room.stateMap[roomStateConfirm] = &RoomStateConfirm{room, make([]bool, length)}
+	room.stateMap[roomStateSelect] = &RoomStateSelect{room, make([]bool, length), make([]int, length)}
+	room.stateMap[roomStateLoadResource] = &RoomStateLoadResource{room}
 	// room.stateMap[roomStateFight] = &RoomStateFight{room}
 	// room.stateMap[roomStateEnd] = &RoomStateEnd{room}
 
@@ -62,10 +65,11 @@ func (room *Room) Broadcast(data []byte) {
 		}
 	}
 }
-func (room *Room) BroadcastByte(data []byte) {
+func (room *Room) SendIndex() {
 
-	for _, sid := range room.playersid {
-		room.server.SendMessageToClient(sid, data)
+	for index, sid := range room.playersid {
+		mes := pb.MakeRoomIndex(int32(index))
+		room.server.SendMessageToClient(sid, mes)
 	}
 
 }
@@ -125,6 +129,10 @@ func (room *Room) GetPlayerIndex(sid uint32) int {
 	return -1
 }
 
+func (room *Room) SetSelectData(selectArr []int) {
+	room.selectArr = selectArr
+}
+
 func (room *Room) GetState() face.IRoomState {
 	return room.stateMap[room.stateId]
 }
@@ -140,7 +148,7 @@ func (room *Room) GetStateId() int {
 
 // }
 
-func NewRoom(_server face.IServer, playersid [3]uint32) *Room {
+func NewRoom(_server face.IServer, playersid []uint32) *Room {
 	newRoom := &Room{
 		server:    _server,
 		stateMap:  make(map[RoomState]face.IRoomState),
@@ -149,7 +157,7 @@ func NewRoom(_server face.IServer, playersid [3]uint32) *Room {
 		playersid: playersid,
 		lock:      *new(sync.Mutex),
 	}
-	newRoom.Init()
+	// newRoom.Init()
 	return newRoom
 }
 
