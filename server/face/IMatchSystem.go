@@ -6,5 +6,5 @@ type IMatchSystem interface {
 	Init()
 	EnterMatchQueue(sid uint32)
 	QuitMatchQueue(sid uint32)
-	UpdateMatchQueue(message *pb.PbMessage)
+	UpdateMatchQueue(message *pb.PbMessage, sid uint32)
 }

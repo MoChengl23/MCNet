@@ -1,7 +1,9 @@
 package face
 
+import "server/pb"
+
 type IRoomState interface {
 	Enter()
 	Exit()
-	Update()
+	Update(sid uint32, mes *pb.PbMessage)
 }

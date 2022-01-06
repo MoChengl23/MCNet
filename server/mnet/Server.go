@@ -91,10 +91,6 @@ func (server *Server) ListenKCP() {
 		}
 		server.AddNewSession(conn)
 
-		// for a, b := range server.sessionMap {
-		// 	fmt.Println(a, b)
-		// }
-
 	}
 }
 
@@ -112,11 +108,11 @@ func (server *Server) Serve() {
 }
 func (server *Server) AddNewSession(conn *kcp.UDPSession) {
 	sid := conn.GetConv()
-	if value, ok := server.sessionMap[sid]; ok {
-		fmt.Println("sdfgsdf", value)
-		delete(server.sessionMap, sid)
+	// if _, ok := server.sessionMap[sid]; ok {
+	// fmt.Println("sdfgsdf", value)
+	// 	delete(server.sessionMap, sid)
 
-	}
+	// }
 	newSession := NewSession(server.messageHandle, conn, sid)
 	server.sessionMap[sid] = newSession
 	newSession.Start()
@@ -156,64 +152,59 @@ func (server *Server) GenerateUniqueSessionID() uint32 {
 // }
 
 //输入是房间创造者的sid，房间号=房主的sid
-func (server *Server) GenerateNewRoom(playerList [1]uint32) {
+func (server *Server) GenerateNewRoom(playerList [3]uint32) {
+	fmt.Println("RoomPlayer有谁")
+	for _, i := range playerList {
+		fmt.Println(i)
+	}
 	newRoom := room.NewRoom(server, playerList)
+	fmt.Println(newRoom.GetRoomId())
 
-	server.roomMap[playerList[0]] = newRoom
+	fmt.Println("roomMap")
+	for i := range server.roomMap {
+		fmt.Println(i)
+	}
+	fmt.Println("sessionMap")
+	for i := range server.sessionMap {
+		fmt.Println(i)
+	}
+
 }
 
 func (server *Server) SendMessageToClient(sid uint32, data []byte) {
 	server.sessionMap[sid].SendMessage(data)
 }
 
-// server.roomMap[roomId] = room
+func (server *Server) GetPlayerSession(sid uint32) face.ISession {
+	if session, ok := server.sessionMap[sid]; ok {
+		return session
+	}
+	return nil
 
-// func (server *Server) LeaveRoom(roomId uint32, playerSid uint32) error {
-
-// 	players := server.roomMap[roomId]
-
-// 	for index, value := range players {
-// 		if value == playerSid {
-// 			players = append(players[:index], players[index+1:]...)
-// 			break
-// 		}
-// 	}
-// 	server.roomMap[roomId] = players
-// 	if len(players) == 0 {
-// 		server.RoomRemove(roomId)
-// 	}
-// 	//将该玩家的房间号重置
-// 	err := server.sessionMap[playerSid].SetRoomId(0)
-// 	return err
-// }
-func (server *Server) RoomRemove(roomId uint32) {
-
-	delete(server.roomMap, roomId)
-
-}
-func (server *Server) GetSession(sid uint32) face.ISession {
-	return server.sessionMap[sid]
 }
 func (server *Server) GetMatchSystem() face.IMatchSystem {
 	return server.matchSystem
 }
-
-//开局，暂时先这么写
-// func (server *Server) GameStart(roomId uint32, roomPlayers []uint32) error {
-// 	//（保险起见）再次更新 此时房间内的人id
-// 	server.roomMap[roomId] = roomPlayers
-// 	for _, playerSid := range roomPlayers {
-// 		server.sessionMap[playerSid].SetRoomId(roomId)
-// 	}
-// 	return nil
-
-// }
-
-// func (server *Server) RoomBroadCast(roomId uint32, message []byte) {
-// 	for _, roomPlayers := range server.roomMap[roomId] {
-// 		server.sessionMap[roomPlayers].SendMessage(message)
-// 	}
-// }
+func (server *Server) GetRoom(roomId uint32) face.IRoom {
+	fmt.Println("roomMap")
+	for i := range server.roomMap {
+		fmt.Println(i)
+	}
+	fmt.Println("sessionMap")
+	for i := range server.sessionMap {
+		fmt.Println(i)
+	}
+	if room, ok := server.roomMap[roomId]; ok {
+		return room
+	}
+	return nil
+}
+func (server *Server) AddRoom(roomId uint32, room face.IRoom) {
+	server.roomMap[roomId] = room
+}
+func (server *Server) DeleteRoom(roomId uint32) {
+	delete(server.roomMap, roomId)
+}
 
 func NewServer() face.IServer {
 	server := &Server{

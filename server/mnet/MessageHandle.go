@@ -23,35 +23,37 @@ func (messageHandle *MessageHandle) Init() {
 	fmt.Println("MessageHandle Init")
 	messageHandle.StartWorkerPool()
 	messageHandle.matchMessageHandle = match.NewMatchMessageHandle(messageHandle.server.GetMatchSystem())
-	messageHandle.roomMessageHandle = room.NewRoomMessageHandle(messageHandle)
+	messageHandle.roomMessageHandle = room.NewRoomMessageHandle(messageHandle.server)
 
 }
 
 func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
+	fmt.Println("DoMesagehandle")
 
 	//测试下Pb能不能解码
 	mes := &pb.PbMessage{}
 	if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(mes)
+	fmt.Println("收到的信息是 ", mes.Cmd)
 
-	roomId := uint32(1)
 	switch mes.Cmd {
+	case pb.PbMessage_login:
+		messageHandle.ResponseLogin(request.GetSid())
+
 	case pb.PbMessage_match:
-		messageHandle.matchMessageHandle.ResponseMatch(mes)
-	case pb.PbMessage_confirm:
-		messageHandle.roomMessageHandle.ResponseConfirm(roomId, mes)
-	case pb.PbMessage_roomInit:
-		messageHandle.roomMessageHandle.ResponseRoomInit(roomId, mes)
-	case pb.PbMessage_select:
-		messageHandle.roomMessageHandle.ResponseSelect(roomId, mes)
-	case pb.PbMessage_load:
-		messageHandle.roomMessageHandle.ResponseLoadResource(roomId, mes)
-	case pb.PbMessage_fightStart:
-		messageHandle.roomMessageHandle.ResponseFightStart(roomId, mes)
+		messageHandle.matchMessageHandle.ResponseMatch(request.GetSid(), mes)
+	case pb.PbMessage_room:
+		messageHandle.roomMessageHandle.ResponseRoom(request.GetSid(), request.GetRoomId(), mes)
 
 	}
+}
+
+func (messageHandle *MessageHandle) ResponseLogin(sid uint32) {
+	mes := pb.MakeLoginMessage()
+	fmt.Println(" response login")
+	messageHandle.server.SendMessageToClient(sid, mes)
+
 }
 
 func (messageHandle *MessageHandle) StartWorkerPool() {
@@ -66,20 +68,21 @@ func (messageHandle *MessageHandle) StartOneWorker(workerID int, taskQueue chan 
 	for {
 		select {
 		case request := <-taskQueue:
-
 			messageHandle.DoMessageHandler(request)
 		}
 	}
+
 }
 func (messageHandle *MessageHandle) AddToTaskQueue(request face.IRequest) {
 
 	workerID := request.GetSession().GetSid() % messageHandle.WorkerPoolSize
-
+	fmt.Println("AddTaskQueue  ", workerID)
 	messageHandle.TaskQueue[workerID] <- request
+	fmt.Println("AddTaskQueue  ", workerID)
 
 }
 
-func NewMessageHandler(_server face.IServer) face.IMessageHandle {
+func NewMessageHandler(_server face.IServer) *MessageHandle {
 	return &MessageHandle{
 		server:         _server,
 		WorkerPoolSize: 10,

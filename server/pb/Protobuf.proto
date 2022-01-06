@@ -13,68 +13,60 @@ message PlayerSelectData{
   }
 
   
-message PlayerData{
-    int32 playSid = 1;
-    int32 roomId = 2;
-    string playerName = 3;
-    int32 playerIndex = 4;
-    bool isConfirmed = 5;
-
-    PlayerSelectData playerSelectData= 6;
+message SelectData{
+    int32 index = 1;
+    string playerName = 2;
+    
+    string chatMes = 3;
+    int32 faction = 6;
     bool isReady = 7;
 
-    int32 loadPercent = 8;
-
-    bool isLoadResourceDone = 9;
-    
   }
-message RoomPlayersData{
-   repeated PlayerData playerData = 1;
-   bool allConfirmed = 2;
 
-   bool allReady = 3;
-
-   bool allLoadResourceDone = 4;
- }
- 
  message PbMessage {
   string name = 1;
-  
-
- CMD cmd = 2;
   enum CMD {
-    clickLogin = 0;
+
+    login = 0;
     match = 1;
-    roomInit = 2;
-    confirm = 3;
-    select = 4;
-    load = 5;
-    fightStart = 6;
+    room = 2;
+    
   }
-  enum Match{
+  CMD cmd = 2;
+enum CmdMatch{
     joinMatch = 0;
     quitMatch = 1;
+   
   }
-  Match cmdMatch = 8;
+  CmdMatch cmdMatch = 3;
+  enum CmdRoom{
+    
+    confirm = 0;
+    select = 1;
+    selectDate = 2;
+    load = 3;
+    loadData = 4;
+
+    fightStart = 5;
+    fightData = 6;
+    dismissed = 7;
+  }
+  
+ 
+  
+  CmdRoom cmdRoom = 4;
 
   
 
  
-  PlayerData playerData = 3;
+  SelectData selectData = 5;
 
+ int32 loadPercent = 6;
 
-
-
- RoomPlayersData roomPlayersData = 4;
-
+  
  
-
-
-
-  
-  
-
-  uint32 sid = 7;
+  // uint32 sId = 7;
+  // uint32 roomId = 6;
  
 }
 

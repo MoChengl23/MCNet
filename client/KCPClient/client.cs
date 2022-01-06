@@ -65,10 +65,13 @@ namespace KCPClient
             while(true){
                 await Task.Delay(5000);
                 if(clientSession != null && clientSession.session != null){
-                    clientSession.session.SendMessage(new PbMessage{
-                        Name = "ping_test",                        
-                    });
-                    // Console.WriteLine("send kcp");
+                    var mes = new PbMessage{
+                        Name = "ping_test",     
+                        Cmd = PbMessage.Types.CMD.Login                   
+                    };
+                    clientSession.session.SendMessage(mes);
+                    Console.WriteLine("发送的信息： ");
+                    Console.WriteLine(mes.Cmd);
                 }
                 else
                     break;

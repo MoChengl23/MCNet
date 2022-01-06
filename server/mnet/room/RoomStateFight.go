@@ -13,6 +13,6 @@ func (state *RoomStateFight) Exit() {
 
 }
 
-func (state *RoomStateFight) Update() {
+func (state *RoomStateFight) Update(index int) {
 
 }

@@ -5,15 +5,17 @@ import (
 	"net"
 
 	"server/face"
+	"server/pb"
 	"time"
 
 	"github.com/xtaci/kcp-go/v5"
+	"google.golang.org/protobuf/proto"
 )
 
 type Session struct {
-	sid        uint32
-	inRoom     bool
-	room       face.IRoom
+	sid uint32
+
+	roomId     uint32
 	inGame     bool
 	kcpSession *kcp.UDPSession
 	address    string
@@ -27,10 +29,10 @@ type Session struct {
 
 func NewSession(messageHandle face.IMessageHandle, conn *kcp.UDPSession, sid uint32) face.ISession {
 	session := &Session{
-		sid:           sid,
-		room:          nil, //记录对局中， 该玩家属于哪个间
-		kcpSession:    conn,
-		inRoom:        false,
+		sid:        sid,
+		roomId:     0, // 该玩家属于哪个间
+		kcpSession: conn,
+
 		inGame:        false,
 		messageChan:   make(chan []byte),
 		messageHandle: messageHandle,
@@ -66,18 +68,23 @@ func (session *Session) StartReader() {
 
 		if err != nil {
 			fmt.Println("session read data failed!!")
-			break
+			return
 		}
 
-		fmt.Println(buf)
-		request := Request{
+		request := &Request{
 			message: buf,
 			session: session,
-			conn:    session.GetConnection(),
+			sid:     session.sid,
+			roomId:  session.roomId,
 		}
 
-		session.messageHandle.AddToTaskQueue(&request)
-
+		session.messageHandle.AddToTaskQueue(request)
+		fmt.Println("New Request")
+		mes := &pb.PbMessage{}
+		if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println("收到的信息是 ", mes, mes.Cmd)
 		session.isAlive <- true
 	}
 
@@ -97,7 +104,6 @@ func (session *Session) StartWriter() {
 			}
 		}
 	}
-
 }
 
 func (session *Session) Start() {
@@ -118,22 +124,16 @@ func (session *Session) Stop() {
 	close(session.isAlive)
 }
 
+func (session *Session) ChangeRoomId(roomId uint32) {
+	session.roomId = roomId
+}
+
 func (session *Session) GetConnection() net.Conn {
 	return session.kcpSession
 }
 
 func (session *Session) GetSid() uint32 {
 	return session.sid
-}
-func (session *Session) SetRoom(room face.IRoom) {
-	session.room = room
-}
-func (session *Session) GetRoom() face.IRoom {
-	return session.room
-}
-
-func (session *Session) IsInRoom() bool {
-	return session.inRoom
 }
 
 func (session *Session) GetRemoteAddress() string {

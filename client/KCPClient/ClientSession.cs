@@ -15,7 +15,8 @@ namespace KCPClient
         }
 
         protected override void OnReceiveMessage(PbMessage pbMessage) {
-            Console.WriteLine(pbMessage);
+            Console.WriteLine("收到的信息",pbMessage);
+            Console.WriteLine(pbMessage.Cmd);
         }
 
         protected override void OnUpdate(DateTime now) {

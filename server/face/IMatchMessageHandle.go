@@ -5,5 +5,5 @@ import (
 )
 
 type IMatchMessageHandle interface {
-	ResponseMatch(message *pb.PbMessage)
+	ResponseMatch(sid uint32, message *pb.PbMessage)
 }

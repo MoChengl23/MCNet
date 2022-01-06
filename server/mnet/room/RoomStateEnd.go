@@ -13,6 +13,6 @@ func (state *RoomStateEnd) Exit() {
 
 }
 
-func (state *RoomStateEnd) Update() {
+func (state *RoomStateEnd) Update(index int) {
 
 }

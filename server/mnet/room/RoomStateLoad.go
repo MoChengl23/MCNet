@@ -13,6 +13,6 @@ func (state *RoomStateLoadResource) Exit() {
 
 }
 
-func (state *RoomStateLoadResource) Update() {
+func (state *RoomStateLoadResource) Update(index int) {
 
 }
