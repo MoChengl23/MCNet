@@ -28,26 +28,31 @@ namespace Pb {
             "YWN0aW9uGAQgASgFEhQKDGlzU2VsZWN0RG9uZRgFIAEoCBIVCg1hbGxTZWxl",
             "Y3REb25lGAYgASgIIlMKClNlbGVjdERhdGESEgoKcGxheWVyTmFtZRgCIAEo",
             "CRIPCgdjaGF0TWVzGAMgASgJEg8KB2ZhY3Rpb24YBiABKAUSDwoHaXNSZWFk",
-            "eRgHIAEoCCLXBAoJUGJNZXNzYWdlEgwKBG5hbWUYASABKAkSHgoDY21kGAIg",
+            "eRgHIAEoCCK1BAoJUGJNZXNzYWdlEgwKBG5hbWUYASABKAkSHgoDY21kGAIg",
             "ASgOMhEucGIuUGJNZXNzYWdlLkNNRBIoCghjbWRNYXRjaBgDIAEoDjIWLnBi",
             "LlBiTWVzc2FnZS5DbWRNYXRjaBImCgdjbWRSb29tGAQgASgOMhUucGIuUGJN",
-            "ZXNzYWdlLkNtZFJvb20SDQoFaW5kZXgYBSABKAUSIgoKc2VsZWN0RGF0YRgG",
-            "IAEoCzIOLnBiLlNlbGVjdERhdGESEwoLbG9hZFBlcmNlbnQYByABKAUSKgoJ",
-            "YmF0dGxlQ01EGAggASgOMhcucGIuUGJNZXNzYWdlLkJhdHRsZUNNRBIUCgxz",
-            "ZWxlY3RlZFVuaXQYCSADKAUSDgoGZW5kUG9zGAogAygFEhEKCWVuZW15VW5p",
-            "dBgLIAEoBRIWCg5pbnRlcmFjdE9iamVjdBgMIAEoBSIxCgNDTUQSCQoFbG9n",
-            "aW4QABIJCgVtYXRjaBABEggKBHJvb20QAhIKCgZiYXR0bGUQAyIoCghDbWRN",
-            "YXRjaBINCglqb2luTWF0Y2gQABINCglxdWl0TWF0Y2gQASJ4CgdDbWRSb29t",
-            "EgsKB2NvbmZpcm0QABIKCgZzZWxlY3QQARIOCgpzZWxlY3REYXRlEAISCAoE",
-            "bG9hZBADEgwKCGxvYWREYXRhEAQSDgoKZmlnaHRTdGFydBAFEg0KCWZpZ2h0",
-            "RGF0YRAGEg0KCWRpc21pc3NlZBAHIi4KCUJhdHRsZUNNRBIICgRtb3ZlEAAS",
-            "CQoFZmlnaHQQARIMCghpbnRlcmFjdBACQgZaBC4vcGJiBnByb3RvMw=="));
+            "ZXNzYWdlLkNtZFJvb20SDQoFaW5kZXgYBSABKAUSDwoHY2hhdE1lcxgLIAEo",
+            "CRIiCgpzZWxlY3REYXRhGAYgASgLMg4ucGIuU2VsZWN0RGF0YRITCgtsb2Fk",
+            "UGVyY2VudBgHIAEoBRIPCgdmcmFtZUlkGAggASgFEioKEFNlbmRGaWdodE1l",
+            "c3NhZ2UYCSABKAsyEC5wYi5GaWdodE1lc3NhZ2USJgoMZmlnaHRNZXNzYWdl",
+            "GAogAygLMhAucGIuRmlnaHRNZXNzYWdlIkgKA0NNRBIJCgVsb2dpbhAAEgkK",
+            "BW1hdGNoEAESCAoEcm9vbRACEgkKBWZpZ2h0EAMSCAoEY2hhdBAEEgwKCGZp",
+            "Z2h0RW5kEAUiKAoIQ21kTWF0Y2gSDQoJam9pbk1hdGNoEAASDQoJcXVpdE1h",
+            "dGNoEAEidgoHQ21kUm9vbRILCgdjb25maXJtEAASCgoGc2VsZWN0EAESDgoK",
+            "c2VsZWN0RGF0ZRACEggKBGxvYWQQAxIMCghsb2FkRGF0YRAEEg4KCmZpZ2h0",
+            "U3RhcnQQBRILCgdmaWdodE9wEAYSDQoJZGlzbWlzc2VkEAcivgEKDEZpZ2h0",
+            "TWVzc2FnZRItCgliYXR0bGVDTUQYASABKA4yGi5wYi5GaWdodE1lc3NhZ2Uu",
+            "QmF0dGxlQ01EEhQKDHNlbGVjdGVkVW5pdBgDIAMoBRIOCgZlbmRQb3MYBCAD",
+            "KAUSEQoJZW5lbXlVbml0GAUgASgFEhYKDmludGVyYWN0T2JqZWN0GAYgASgF",
+            "Ii4KCUJhdHRsZUNNRBIICgRtb3ZlEAASCQoFZmlnaHQQARIMCghpbnRlcmFj",
+            "dBACQgZaBC4vcGJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Pb.PlayerSelectData), global::Pb.PlayerSelectData.Parser, new[]{ "Faction", "IsSelectDone", "AllSelectDone" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pb.SelectData), global::Pb.SelectData.Parser, new[]{ "PlayerName", "ChatMes", "Faction", "IsReady" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.PbMessage), global::Pb.PbMessage.Parser, new[]{ "Name", "Cmd", "CmdMatch", "CmdRoom", "Index", "SelectData", "LoadPercent", "BattleCMD", "SelectedUnit", "EndPos", "EnemyUnit", "InteractObject" }, null, new[]{ typeof(global::Pb.PbMessage.Types.CMD), typeof(global::Pb.PbMessage.Types.CmdMatch), typeof(global::Pb.PbMessage.Types.CmdRoom), typeof(global::Pb.PbMessage.Types.BattleCMD) }, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.PbMessage), global::Pb.PbMessage.Parser, new[]{ "Name", "Cmd", "CmdMatch", "CmdRoom", "Index", "ChatMes", "SelectData", "LoadPercent", "FrameId", "SendFightMessage", "FightMessage" }, null, new[]{ typeof(global::Pb.PbMessage.Types.CMD), typeof(global::Pb.PbMessage.Types.CmdMatch), typeof(global::Pb.PbMessage.Types.CmdRoom) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.FightMessage), global::Pb.FightMessage.Parser, new[]{ "BattleCMD", "SelectedUnit", "EndPos", "EnemyUnit", "InteractObject" }, null, new[]{ typeof(global::Pb.FightMessage.Types.BattleCMD) }, null, null)
           }));
     }
     #endregion
@@ -662,13 +667,12 @@ namespace Pb {
       cmdMatch_ = other.cmdMatch_;
       cmdRoom_ = other.cmdRoom_;
       index_ = other.index_;
+      chatMes_ = other.chatMes_;
       selectData_ = other.selectData_ != null ? other.selectData_.Clone() : null;
       loadPercent_ = other.loadPercent_;
-      battleCMD_ = other.battleCMD_;
-      selectedUnit_ = other.selectedUnit_.Clone();
-      endPos_ = other.endPos_.Clone();
-      enemyUnit_ = other.enemyUnit_;
-      interactObject_ = other.interactObject_;
+      frameId_ = other.frameId_;
+      sendFightMessage_ = other.sendFightMessage_ != null ? other.sendFightMessage_.Clone() : null;
+      fightMessage_ = other.fightMessage_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -741,6 +745,18 @@ namespace Pb {
       }
     }
 
+    /// <summary>Field number for the "chatMes" field.</summary>
+    public const int ChatMesFieldNumber = 11;
+    private string chatMes_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string ChatMes {
+      get { return chatMes_; }
+      set {
+        chatMes_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "selectData" field.</summary>
     public const int SelectDataFieldNumber = 6;
     private global::Pb.SelectData selectData_;
@@ -765,71 +781,39 @@ namespace Pb {
       }
     }
 
-    /// <summary>Field number for the "battleCMD" field.</summary>
-    public const int BattleCMDFieldNumber = 8;
-    private global::Pb.PbMessage.Types.BattleCMD battleCMD_ = global::Pb.PbMessage.Types.BattleCMD.Move;
+    /// <summary>Field number for the "frameId" field.</summary>
+    public const int FrameIdFieldNumber = 8;
+    private int frameId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Pb.PbMessage.Types.BattleCMD BattleCMD {
-      get { return battleCMD_; }
+    public int FrameId {
+      get { return frameId_; }
       set {
-        battleCMD_ = value;
+        frameId_ = value;
       }
     }
 
-    /// <summary>Field number for the "selectedUnit" field.</summary>
-    public const int SelectedUnitFieldNumber = 9;
-    private static readonly pb::FieldCodec<int> _repeated_selectedUnit_codec
-        = pb::FieldCodec.ForInt32(74);
-    private readonly pbc::RepeatedField<int> selectedUnit_ = new pbc::RepeatedField<int>();
+    /// <summary>Field number for the "SendFightMessage" field.</summary>
+    public const int SendFightMessageFieldNumber = 9;
+    private global::Pb.FightMessage sendFightMessage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<int> SelectedUnit {
-      get { return selectedUnit_; }
-    }
-
-    /// <summary>Field number for the "endPos" field.</summary>
-    public const int EndPosFieldNumber = 10;
-    private static readonly pb::FieldCodec<int> _repeated_endPos_codec
-        = pb::FieldCodec.ForInt32(82);
-    private readonly pbc::RepeatedField<int> endPos_ = new pbc::RepeatedField<int>();
-    /// <summary>
-    /// move
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<int> EndPos {
-      get { return endPos_; }
-    }
-
-    /// <summary>Field number for the "enemyUnit" field.</summary>
-    public const int EnemyUnitFieldNumber = 11;
-    private int enemyUnit_;
-    /// <summary>
-    ///fight
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int EnemyUnit {
-      get { return enemyUnit_; }
+    public global::Pb.FightMessage SendFightMessage {
+      get { return sendFightMessage_; }
       set {
-        enemyUnit_ = value;
+        sendFightMessage_ = value;
       }
     }
 
-    /// <summary>Field number for the "interactObject" field.</summary>
-    public const int InteractObjectFieldNumber = 12;
-    private int interactObject_;
-    /// <summary>
-    ///interact
-    /// </summary>
+    /// <summary>Field number for the "fightMessage" field.</summary>
+    public const int FightMessageFieldNumber = 10;
+    private static readonly pb::FieldCodec<global::Pb.FightMessage> _repeated_fightMessage_codec
+        = pb::FieldCodec.ForMessage(82, global::Pb.FightMessage.Parser);
+    private readonly pbc::RepeatedField<global::Pb.FightMessage> fightMessage_ = new pbc::RepeatedField<global::Pb.FightMessage>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int InteractObject {
-      get { return interactObject_; }
-      set {
-        interactObject_ = value;
-      }
+    public pbc::RepeatedField<global::Pb.FightMessage> FightMessage {
+      get { return fightMessage_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -852,13 +836,12 @@ namespace Pb {
       if (CmdMatch != other.CmdMatch) return false;
       if (CmdRoom != other.CmdRoom) return false;
       if (Index != other.Index) return false;
+      if (ChatMes != other.ChatMes) return false;
       if (!object.Equals(SelectData, other.SelectData)) return false;
       if (LoadPercent != other.LoadPercent) return false;
-      if (BattleCMD != other.BattleCMD) return false;
-      if(!selectedUnit_.Equals(other.selectedUnit_)) return false;
-      if(!endPos_.Equals(other.endPos_)) return false;
-      if (EnemyUnit != other.EnemyUnit) return false;
-      if (InteractObject != other.InteractObject) return false;
+      if (FrameId != other.FrameId) return false;
+      if (!object.Equals(SendFightMessage, other.SendFightMessage)) return false;
+      if(!fightMessage_.Equals(other.fightMessage_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -871,13 +854,12 @@ namespace Pb {
       if (CmdMatch != global::Pb.PbMessage.Types.CmdMatch.JoinMatch) hash ^= CmdMatch.GetHashCode();
       if (CmdRoom != global::Pb.PbMessage.Types.CmdRoom.Confirm) hash ^= CmdRoom.GetHashCode();
       if (Index != 0) hash ^= Index.GetHashCode();
+      if (ChatMes.Length != 0) hash ^= ChatMes.GetHashCode();
       if (selectData_ != null) hash ^= SelectData.GetHashCode();
       if (LoadPercent != 0) hash ^= LoadPercent.GetHashCode();
-      if (BattleCMD != global::Pb.PbMessage.Types.BattleCMD.Move) hash ^= BattleCMD.GetHashCode();
-      hash ^= selectedUnit_.GetHashCode();
-      hash ^= endPos_.GetHashCode();
-      if (EnemyUnit != 0) hash ^= EnemyUnit.GetHashCode();
-      if (InteractObject != 0) hash ^= InteractObject.GetHashCode();
+      if (FrameId != 0) hash ^= FrameId.GetHashCode();
+      if (sendFightMessage_ != null) hash ^= SendFightMessage.GetHashCode();
+      hash ^= fightMessage_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -924,19 +906,18 @@ namespace Pb {
         output.WriteRawTag(56);
         output.WriteInt32(LoadPercent);
       }
-      if (BattleCMD != global::Pb.PbMessage.Types.BattleCMD.Move) {
+      if (FrameId != 0) {
         output.WriteRawTag(64);
-        output.WriteEnum((int) BattleCMD);
+        output.WriteInt32(FrameId);
       }
-      selectedUnit_.WriteTo(output, _repeated_selectedUnit_codec);
-      endPos_.WriteTo(output, _repeated_endPos_codec);
-      if (EnemyUnit != 0) {
-        output.WriteRawTag(88);
-        output.WriteInt32(EnemyUnit);
+      if (sendFightMessage_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(SendFightMessage);
       }
-      if (InteractObject != 0) {
-        output.WriteRawTag(96);
-        output.WriteInt32(InteractObject);
+      fightMessage_.WriteTo(output, _repeated_fightMessage_codec);
+      if (ChatMes.Length != 0) {
+        output.WriteRawTag(90);
+        output.WriteString(ChatMes);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -976,19 +957,18 @@ namespace Pb {
         output.WriteRawTag(56);
         output.WriteInt32(LoadPercent);
       }
-      if (BattleCMD != global::Pb.PbMessage.Types.BattleCMD.Move) {
+      if (FrameId != 0) {
         output.WriteRawTag(64);
-        output.WriteEnum((int) BattleCMD);
+        output.WriteInt32(FrameId);
       }
-      selectedUnit_.WriteTo(ref output, _repeated_selectedUnit_codec);
-      endPos_.WriteTo(ref output, _repeated_endPos_codec);
-      if (EnemyUnit != 0) {
-        output.WriteRawTag(88);
-        output.WriteInt32(EnemyUnit);
+      if (sendFightMessage_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(SendFightMessage);
       }
-      if (InteractObject != 0) {
-        output.WriteRawTag(96);
-        output.WriteInt32(InteractObject);
+      fightMessage_.WriteTo(ref output, _repeated_fightMessage_codec);
+      if (ChatMes.Length != 0) {
+        output.WriteRawTag(90);
+        output.WriteString(ChatMes);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1015,23 +995,22 @@ namespace Pb {
       if (Index != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Index);
       }
+      if (ChatMes.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ChatMes);
+      }
       if (selectData_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(SelectData);
       }
       if (LoadPercent != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(LoadPercent);
       }
-      if (BattleCMD != global::Pb.PbMessage.Types.BattleCMD.Move) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) BattleCMD);
+      if (FrameId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(FrameId);
       }
-      size += selectedUnit_.CalculateSize(_repeated_selectedUnit_codec);
-      size += endPos_.CalculateSize(_repeated_endPos_codec);
-      if (EnemyUnit != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EnemyUnit);
+      if (sendFightMessage_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SendFightMessage);
       }
-      if (InteractObject != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(InteractObject);
-      }
+      size += fightMessage_.CalculateSize(_repeated_fightMessage_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -1059,6 +1038,9 @@ namespace Pb {
       if (other.Index != 0) {
         Index = other.Index;
       }
+      if (other.ChatMes.Length != 0) {
+        ChatMes = other.ChatMes;
+      }
       if (other.selectData_ != null) {
         if (selectData_ == null) {
           SelectData = new global::Pb.SelectData();
@@ -1068,17 +1050,16 @@ namespace Pb {
       if (other.LoadPercent != 0) {
         LoadPercent = other.LoadPercent;
       }
-      if (other.BattleCMD != global::Pb.PbMessage.Types.BattleCMD.Move) {
-        BattleCMD = other.BattleCMD;
+      if (other.FrameId != 0) {
+        FrameId = other.FrameId;
       }
-      selectedUnit_.Add(other.selectedUnit_);
-      endPos_.Add(other.endPos_);
-      if (other.EnemyUnit != 0) {
-        EnemyUnit = other.EnemyUnit;
+      if (other.sendFightMessage_ != null) {
+        if (sendFightMessage_ == null) {
+          SendFightMessage = new global::Pb.FightMessage();
+        }
+        SendFightMessage.MergeFrom(other.SendFightMessage);
       }
-      if (other.InteractObject != 0) {
-        InteractObject = other.InteractObject;
-      }
+      fightMessage_.Add(other.fightMessage_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1126,25 +1107,22 @@ namespace Pb {
             break;
           }
           case 64: {
-            BattleCMD = (global::Pb.PbMessage.Types.BattleCMD) input.ReadEnum();
+            FrameId = input.ReadInt32();
             break;
           }
-          case 74:
-          case 72: {
-            selectedUnit_.AddEntriesFrom(input, _repeated_selectedUnit_codec);
+          case 74: {
+            if (sendFightMessage_ == null) {
+              SendFightMessage = new global::Pb.FightMessage();
+            }
+            input.ReadMessage(SendFightMessage);
             break;
           }
-          case 82:
-          case 80: {
-            endPos_.AddEntriesFrom(input, _repeated_endPos_codec);
+          case 82: {
+            fightMessage_.AddEntriesFrom(input, _repeated_fightMessage_codec);
             break;
           }
-          case 88: {
-            EnemyUnit = input.ReadInt32();
-            break;
-          }
-          case 96: {
-            InteractObject = input.ReadInt32();
+          case 90: {
+            ChatMes = input.ReadString();
             break;
           }
         }
@@ -1194,25 +1172,22 @@ namespace Pb {
             break;
           }
           case 64: {
-            BattleCMD = (global::Pb.PbMessage.Types.BattleCMD) input.ReadEnum();
+            FrameId = input.ReadInt32();
             break;
           }
-          case 74:
-          case 72: {
-            selectedUnit_.AddEntriesFrom(ref input, _repeated_selectedUnit_codec);
+          case 74: {
+            if (sendFightMessage_ == null) {
+              SendFightMessage = new global::Pb.FightMessage();
+            }
+            input.ReadMessage(SendFightMessage);
             break;
           }
-          case 82:
-          case 80: {
-            endPos_.AddEntriesFrom(ref input, _repeated_endPos_codec);
+          case 82: {
+            fightMessage_.AddEntriesFrom(ref input, _repeated_fightMessage_codec);
             break;
           }
-          case 88: {
-            EnemyUnit = input.ReadInt32();
-            break;
-          }
-          case 96: {
-            InteractObject = input.ReadInt32();
+          case 90: {
+            ChatMes = input.ReadString();
             break;
           }
         }
@@ -1229,7 +1204,9 @@ namespace Pb {
         [pbr::OriginalName("login")] Login = 0,
         [pbr::OriginalName("match")] Match = 1,
         [pbr::OriginalName("room")] Room = 2,
-        [pbr::OriginalName("battle")] Battle = 3,
+        [pbr::OriginalName("fight")] Fight = 3,
+        [pbr::OriginalName("chat")] Chat = 4,
+        [pbr::OriginalName("fightEnd")] FightEnd = 5,
       }
 
       public enum CmdMatch {
@@ -1244,10 +1221,346 @@ namespace Pb {
         [pbr::OriginalName("load")] Load = 3,
         [pbr::OriginalName("loadData")] LoadData = 4,
         [pbr::OriginalName("fightStart")] FightStart = 5,
-        [pbr::OriginalName("fightData")] FightData = 6,
+        [pbr::OriginalName("fightOp")] FightOp = 6,
         [pbr::OriginalName("dismissed")] Dismissed = 7,
       }
 
+    }
+    #endregion
+
+  }
+
+  public sealed partial class FightMessage : pb::IMessage<FightMessage>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<FightMessage> _parser = new pb::MessageParser<FightMessage>(() => new FightMessage());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<FightMessage> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pb.ProtobufReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FightMessage() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FightMessage(FightMessage other) : this() {
+      battleCMD_ = other.battleCMD_;
+      selectedUnit_ = other.selectedUnit_.Clone();
+      endPos_ = other.endPos_.Clone();
+      enemyUnit_ = other.enemyUnit_;
+      interactObject_ = other.interactObject_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FightMessage Clone() {
+      return new FightMessage(this);
+    }
+
+    /// <summary>Field number for the "battleCMD" field.</summary>
+    public const int BattleCMDFieldNumber = 1;
+    private global::Pb.FightMessage.Types.BattleCMD battleCMD_ = global::Pb.FightMessage.Types.BattleCMD.Move;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Pb.FightMessage.Types.BattleCMD BattleCMD {
+      get { return battleCMD_; }
+      set {
+        battleCMD_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "selectedUnit" field.</summary>
+    public const int SelectedUnitFieldNumber = 3;
+    private static readonly pb::FieldCodec<int> _repeated_selectedUnit_codec
+        = pb::FieldCodec.ForInt32(26);
+    private readonly pbc::RepeatedField<int> selectedUnit_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<int> SelectedUnit {
+      get { return selectedUnit_; }
+    }
+
+    /// <summary>Field number for the "endPos" field.</summary>
+    public const int EndPosFieldNumber = 4;
+    private static readonly pb::FieldCodec<int> _repeated_endPos_codec
+        = pb::FieldCodec.ForInt32(34);
+    private readonly pbc::RepeatedField<int> endPos_ = new pbc::RepeatedField<int>();
+    /// <summary>
+    /// move
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<int> EndPos {
+      get { return endPos_; }
+    }
+
+    /// <summary>Field number for the "enemyUnit" field.</summary>
+    public const int EnemyUnitFieldNumber = 5;
+    private int enemyUnit_;
+    /// <summary>
+    ///fight
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int EnemyUnit {
+      get { return enemyUnit_; }
+      set {
+        enemyUnit_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "interactObject" field.</summary>
+    public const int InteractObjectFieldNumber = 6;
+    private int interactObject_;
+    /// <summary>
+    ///interact
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int InteractObject {
+      get { return interactObject_; }
+      set {
+        interactObject_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as FightMessage);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(FightMessage other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (BattleCMD != other.BattleCMD) return false;
+      if(!selectedUnit_.Equals(other.selectedUnit_)) return false;
+      if(!endPos_.Equals(other.endPos_)) return false;
+      if (EnemyUnit != other.EnemyUnit) return false;
+      if (InteractObject != other.InteractObject) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (BattleCMD != global::Pb.FightMessage.Types.BattleCMD.Move) hash ^= BattleCMD.GetHashCode();
+      hash ^= selectedUnit_.GetHashCode();
+      hash ^= endPos_.GetHashCode();
+      if (EnemyUnit != 0) hash ^= EnemyUnit.GetHashCode();
+      if (InteractObject != 0) hash ^= InteractObject.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (BattleCMD != global::Pb.FightMessage.Types.BattleCMD.Move) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) BattleCMD);
+      }
+      selectedUnit_.WriteTo(output, _repeated_selectedUnit_codec);
+      endPos_.WriteTo(output, _repeated_endPos_codec);
+      if (EnemyUnit != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(EnemyUnit);
+      }
+      if (InteractObject != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(InteractObject);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (BattleCMD != global::Pb.FightMessage.Types.BattleCMD.Move) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) BattleCMD);
+      }
+      selectedUnit_.WriteTo(ref output, _repeated_selectedUnit_codec);
+      endPos_.WriteTo(ref output, _repeated_endPos_codec);
+      if (EnemyUnit != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(EnemyUnit);
+      }
+      if (InteractObject != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(InteractObject);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (BattleCMD != global::Pb.FightMessage.Types.BattleCMD.Move) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) BattleCMD);
+      }
+      size += selectedUnit_.CalculateSize(_repeated_selectedUnit_codec);
+      size += endPos_.CalculateSize(_repeated_endPos_codec);
+      if (EnemyUnit != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EnemyUnit);
+      }
+      if (InteractObject != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(InteractObject);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(FightMessage other) {
+      if (other == null) {
+        return;
+      }
+      if (other.BattleCMD != global::Pb.FightMessage.Types.BattleCMD.Move) {
+        BattleCMD = other.BattleCMD;
+      }
+      selectedUnit_.Add(other.selectedUnit_);
+      endPos_.Add(other.endPos_);
+      if (other.EnemyUnit != 0) {
+        EnemyUnit = other.EnemyUnit;
+      }
+      if (other.InteractObject != 0) {
+        InteractObject = other.InteractObject;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            BattleCMD = (global::Pb.FightMessage.Types.BattleCMD) input.ReadEnum();
+            break;
+          }
+          case 26:
+          case 24: {
+            selectedUnit_.AddEntriesFrom(input, _repeated_selectedUnit_codec);
+            break;
+          }
+          case 34:
+          case 32: {
+            endPos_.AddEntriesFrom(input, _repeated_endPos_codec);
+            break;
+          }
+          case 40: {
+            EnemyUnit = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            InteractObject = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            BattleCMD = (global::Pb.FightMessage.Types.BattleCMD) input.ReadEnum();
+            break;
+          }
+          case 26:
+          case 24: {
+            selectedUnit_.AddEntriesFrom(ref input, _repeated_selectedUnit_codec);
+            break;
+          }
+          case 34:
+          case 32: {
+            endPos_.AddEntriesFrom(ref input, _repeated_endPos_codec);
+            break;
+          }
+          case 40: {
+            EnemyUnit = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            InteractObject = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the FightMessage message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static partial class Types {
       public enum BattleCMD {
         [pbr::OriginalName("move")] Move = 0,
         [pbr::OriginalName("fight")] Fight = 1,

@@ -15,7 +15,7 @@ func Byte(mes *PbMessage) []byte {
 	return nil
 }
 
-func MakeLoginMessage() []byte {
+func MakeLogin() []byte {
 
 	mes := &PbMessage{
 		Cmd:  PbMessage_login,
@@ -43,7 +43,7 @@ func MakeQuitMatch() []byte {
 
 //client 发给server: Cmd,CmdRoom: PbMessage_confirm, sid
 
-func MakeRoomConfirmMessage() []byte {
+func MakeRoomConfirm() []byte {
 	mes := &PbMessage{
 		Cmd:     PbMessage_room,
 		CmdRoom: PbMessage_confirm,
@@ -54,12 +54,12 @@ func MakeRoomIndex(index int32) []byte {
 	mes := &PbMessage{
 		Cmd:     PbMessage_room,
 		CmdRoom: PbMessage_confirm,
-		Index: index,
+		Index:   index,
 	}
 	return Byte(mes)
 }
 
-func MakeRoomDismissMes() []byte {
+func MakeRoomDismiss() []byte {
 	mes := &PbMessage{
 		Cmd:     PbMessage_room,
 		CmdRoom: PbMessage_dismissed,
@@ -74,7 +74,7 @@ func MakeRoomDismissMes() []byte {
 // 	}
 // }
 
-func MakeRoomSelectMessage() []byte {
+func MakeRoomSelect() []byte {
 	mes := &PbMessage{
 		Cmd:     PbMessage_room,
 		CmdRoom: PbMessage_select,
@@ -82,6 +82,46 @@ func MakeRoomSelectMessage() []byte {
 	return Byte(mes)
 }
 
-func MakeRoomSelectData(mes *PbMessage){
+func MakeRoomSelectData(mes *PbMessage) {
 
+}
+
+func MakeRoomLoadCmd() []byte {
+	mes := &PbMessage{
+		Cmd:     PbMessage_room,
+		CmdRoom: PbMessage_load,
+	}
+	return Byte(mes)
+}
+func MakeRoomLoadData(loadPercent int32) []byte {
+	mes := &PbMessage{
+		Cmd:         PbMessage_room,
+		CmdRoom:     PbMessage_loadData,
+		LoadPercent: loadPercent,
+	}
+	return Byte(mes)
+}
+
+func MakeFightStartCmd() []byte {
+	mes := &PbMessage{
+		Cmd:     PbMessage_room,
+		CmdRoom: PbMessage_fightStart,
+	}
+	return Byte(mes)
+}
+
+func MakeFightData(frameId int, fightMessage []*FightMessage) []byte {
+	mes := &PbMessage{
+		Cmd:          PbMessage_room,
+		CmdRoom:      PbMessage_fightOp,
+		FrameId:      int32(frameId),
+		FightMessage: fightMessage,
+	}
+	return Byte(mes)
+}
+func MakeFightEnd() []byte {
+	mes := &PbMessage{
+		Cmd: PbMessage_fightEnd,
+	}
+	return Byte(mes)
 }

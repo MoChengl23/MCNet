@@ -15,25 +15,32 @@ type RoomStateConfirm struct {
 	confirmArr []bool
 }
 
+func NewRoomStateConfirm(room face.IRoom, length int) face.IRoomState{
+	state := &RoomStateConfirm{
+		room:       room,
+		confirmArr: make([]bool, length),
+	}
+	return state
+}
+
 func (state *RoomStateConfirm) Enter() {
 	for i := 0; i < state.room.GetRoomPlayerCount(); i++ {
 		state.confirmArr[i] = false
 	}
 
 	state.room.ChangePlayersRoomId()
-	mes := pb.MakeRoomConfirmMessage()
+	mes := pb.MakeRoomConfirm()
 	//向玩家发送进入房间命令，和房间成员信息
 
 	state.room.Broadcast(mes)
 	state.room.SendIndex()
-
 
 	state.CheckTimeLimit()
 
 }
 func (state *RoomStateConfirm) Dismiss() {
 
-	mes := pb.MakeRoomDismissMes()
+	mes := pb.MakeRoomDismiss()
 	state.room.Broadcast(mes)
 	state.room.Delete()
 
@@ -53,7 +60,6 @@ func (state *RoomStateConfirm) Update(sid uint32, mes *pb.PbMessage) {
 }
 
 func (state *RoomStateConfirm) CheckTimeLimit() {
-
 	select {
 	case <-time.After(time.Second * 999):
 		fmt.Println("room confirm reachtime ")

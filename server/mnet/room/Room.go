@@ -43,10 +43,10 @@ func (room *Room) Init() {
 	fmt.Println("New Room Init")
 	length := len(room.playersid)
 	//Add StateMap
-	room.stateMap[roomStateConfirm] = &RoomStateConfirm{room, make([]bool, length)}
-	room.stateMap[roomStateSelect] = &RoomStateSelect{room, make([]bool, length), make([]int, length)}
-	room.stateMap[roomStateLoadResource] = &RoomStateLoadResource{room}
-	// room.stateMap[roomStateFight] = &RoomStateFight{room}
+	room.stateMap[roomStateConfirm] = NewRoomStateConfirm(room, length)
+	room.stateMap[roomStateSelect] = NewRoomStateSelect(room, length)
+	room.stateMap[roomStateLoadResource] = NewRoomStateLoadResource(room, length)
+	room.stateMap[roomStateFight] = NewRoomStateFight(room, length)
 	// room.stateMap[roomStateEnd] = &RoomStateEnd{room}
 
 	room.ChangeRoomState(int(roomStateConfirm))
@@ -77,7 +77,6 @@ func (room *Room) SendIndex() {
 func (room *Room) ChangeRoomState(newState int) {
 	if int(room.stateId) != newState {
 		room.stateMap[room.stateId].Exit()
-
 	}
 	room.stateId = RoomState(newState)
 	room.stateMap[room.stateId].Enter()
@@ -136,6 +135,7 @@ func (room *Room) SetSelectData(selectArr []int) {
 func (room *Room) GetState() face.IRoomState {
 	return room.stateMap[room.stateId]
 }
+
 func (room *Room) GetStateId() int {
 	return int(room.stateId)
 }

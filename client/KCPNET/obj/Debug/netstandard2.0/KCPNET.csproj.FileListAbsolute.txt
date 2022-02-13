@@ -34,3 +34,6 @@ D:\1\Net\client\KCPNET\obj\Debug\netstandard2.0\KCPNET.pdb
 D:\xunlei\Study\Assets\DLL\KCPNET.deps.json
 D:\xunlei\Study\Assets\DLL\KCPNET.dll
 D:\xunlei\Study\Assets\DLL\KCPNET.pdb
+D:\1\Dll\KCPNET.deps.json
+D:\1\Dll\KCPNET.dll
+D:\1\Dll\KCPNET.pdb

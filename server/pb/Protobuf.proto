@@ -30,7 +30,9 @@ message SelectData{
     login = 0;
     match = 1;
     room = 2;
-    
+    fight = 3;
+    chat = 4;
+    fightEnd = 5;
   }
   CMD cmd = 2;
 
@@ -50,13 +52,19 @@ message SelectData{
     loadData = 4;
 
     fightStart = 5;
-    fightData = 6;
+    
+    fightOp = 6;
     dismissed = 7;
   }
   CmdRoom cmdRoom = 4;
   //index代表在房间的索引
   int32 index = 5;
- 
+
+  string chatMes = 11;
+
+  
+
+
   
   
 
@@ -67,11 +75,32 @@ message SelectData{
 
   int32 loadPercent = 7;
 
-  
- 
-  // uint32 sId = 7;
-  // uint32 roomId = 6;
- 
+  int32 frameId = 8;
+
+  FightMessage SendFightMessage = 9;
+
+  repeated FightMessage fightMessage = 10;
+
 }
+
+message FightMessage{
+
+  enum BattleCMD{
+    move = 0;
+    fight = 1;
+    interact = 2;
+  }
+  BattleCMD battleCMD = 1;
+
+  repeated int32 selectedUnit = 3;
+  // move
+  repeated int32 endPos = 4;
+  //fight
+  int32 enemyUnit = 5;
+  //interact
+  int32 interactObject = 6;
+
+}
+
 
 // protoc --go_out=./ ./Protobuf.proto

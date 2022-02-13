@@ -2,17 +2,23 @@ package main
 
 import (
 	"server/mnet"
+
+	"fmt"
 )
 
 // mnet "server/Net"
 
 func main() {
 
-	// test := test{}
-	// test.AddQueue()
-	// fmt.Println(test.GetLen())
+	a := mnet.NewTestStruct()
+	a.Test()
+	a.Print()
+	
 
-	server := mnet.NewServer()
-	server.Serve()
+	// server := mnet.NewServer()
+	// server.Serve()
 
+}
+func DoSomething() {
+	fmt.Println("I do something")
 }

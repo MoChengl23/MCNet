@@ -45,17 +45,25 @@ func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
 		messageHandle.matchMessageHandle.ResponseMatch(request.GetSid(), mes)
 	case pb.PbMessage_room:
 		messageHandle.roomMessageHandle.ResponseRoom(request.GetSid(), request.GetRoomId(), mes)
-
+		// case pb.PbMessage_fight:
+		// 	messageHandle.ResponseTest(request.GetSid(), mes)
 	}
 }
 
 func (messageHandle *MessageHandle) ResponseLogin(sid uint32) {
-	mes := pb.MakeLoginMessage()
+	mes := pb.MakeLogin()
 	fmt.Println(" response login")
 	messageHandle.server.SendMessageToClient(sid, mes)
 
 }
+func (messageHandle *MessageHandle) ResponseTest(sid uint32, mes1 *pb.PbMessage) {
+	mes := pb.Byte(mes1)
+	fmt.Println("test")
+	for sid, _ := range messageHandle.server.GetAllPlayer() {
+		messageHandle.server.SendMessageToClient(sid, mes)
+	}
 
+}
 
 func (messageHandle *MessageHandle) StartWorkerPool() {
 	for i := 0; i < int(messageHandle.WorkerPoolSize); i++ {

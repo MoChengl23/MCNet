@@ -1,18 +1,40 @@
 package timer
 
+import (
+	"time"
+)
 
-type Callback func(a int)
-type Timer struct{
-	
+type MyTimer struct {
+	ticker     time.Ticker
+	interval   int //单位：纳秒
+	callback   func()
+	needDelete chan bool
 }
 
-func(timer *Timer)  AddTask(delay int){
+func (myTimer *MyTimer) UpdateTask() {
+	defer myTimer.ticker.Stop()
+	ticks := myTimer.ticker.C
+	for range ticks {
+		select {
+		case <-myTimer.needDelete:
+			return
+		default:
+			myTimer.callback()
+		}
 
-	go timer.UpdateTask()
+	}
+
 }
 
-func(timer *Timer) UpdateTask(){
+func (myTimer *MyTimer) DeleteTick() {
+	myTimer.needDelete <- true
+	close(myTimer.needDelete)
+}
 
-
+func (myTimer *MyTimer) AddTickTimerTask(interval int, callback func()) {
+	myTimer.ticker = *time.NewTicker(time.Millisecond * time.Duration(interval))
+	myTimer.callback = callback
+	myTimer.needDelete = make(chan bool)
+	go myTimer.UpdateTask()
 
 }

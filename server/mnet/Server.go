@@ -194,6 +194,10 @@ func (server *Server) DeleteRoom(roomId uint32) {
 	delete(server.roomMap, roomId)
 }
 
+func (server *Server) GetAllPlayer() map[uint32]face.ISession {
+	return server.sessionMap
+}
+
 func NewServer() face.IServer {
 	server := &Server{
 		IP:    "0.0.0.0:6666",
