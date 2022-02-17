@@ -11,7 +11,7 @@ type RoomMessageHandle struct {
 }
 
 func (messageHandle *RoomMessageHandle) ResponseRoom(sid uint32, roomId uint32, message *pb.PbMessage) {
-	fmt.Println("当前房间号 ", roomId)
+	// fmt.Println("当前房间号 ", roomId)
 	if roomId == 0 {
 		return
 
@@ -19,8 +19,8 @@ func (messageHandle *RoomMessageHandle) ResponseRoom(sid uint32, roomId uint32, 
 
 	room := messageHandle.server.GetRoom(roomId)
 	if room != nil {
-		fmt.Println("这个房间的state是 ", room.GetStateId())
-		room.GetState().Update(sid, message)
+		// fmt.Println("这个房间的state是 ", room.GetStateId())
+		room.GetCurrentState().Update(sid, message)
 	} else {
 		fmt.Println("No Room")
 	}

@@ -6,7 +6,7 @@ import (
 	"net"
 	"server/face"
 	match "server/mnet/Match"
-	"server/mnet/room"
+
 	"sync"
 
 	"github.com/xtaci/kcp-go/v5"
@@ -20,18 +20,15 @@ type Server struct {
 	sessionMux sync.Mutex
 	roomMap    map[uint32]face.IRoom //存放所有房间
 
-	roomNumber   uint32 //当前共有多少个房间
-	playerNumber uint32
+	NewSessionSid uint32
 
 	messageHandle face.IMessageHandle
 	matchSystem   face.IMatchSystem
-	// roomSystem  face.IRoomSystem
 }
 
 func (server *Server) Start() {
 	fmt.Println("Start Server")
-	//启动工作池
-	// server.messageHandle.Init()
+
 	go server.ListenUDP()
 
 	go server.ListenKCP()
@@ -89,35 +86,44 @@ func (server *Server) ListenKCP() {
 			fmt.Println("accept conn failed!!")
 			continue
 		}
-		server.AddNewSession(conn)
+		server.AddSession(conn)
 
 	}
 }
 
-func (server *Server) Serve() {
-	server.Start()
-
+func (server *Server) Init() {
 	server.matchSystem = match.NewMatchSystem(server)
 	server.matchSystem.Init()
 
 	server.messageHandle = NewMessageHandler(server)
 	server.messageHandle.Init()
+}
+
+func (server *Server) Serve() {
+	server.Init()
+	server.Start()
 
 	select {}
 
 }
-func (server *Server) AddNewSession(conn *kcp.UDPSession) {
+func (server *Server) AddSession(conn *kcp.UDPSession) {
 	sid := conn.GetConv()
-	// if _, ok := server.sessionMap[sid]; ok {
-	// fmt.Println("sdfgsdf", value)
-	// 	delete(server.sessionMap, sid)
 
-	// }
-	newSession := NewSession(server.messageHandle, conn, sid)
+	newSession := NewSession(server, conn, sid)
 	server.sessionMap[sid] = newSession
 	newSession.Start()
 
 	fmt.Println("a new session connect ")
+}
+func (server *Server) RemoveSession(sid uint32) {
+	delete(server.sessionMap, sid)
+}
+func (server *Server) GetSession(sid uint32) face.ISession {
+	if session, ok := server.sessionMap[sid]; ok {
+		return session
+	}
+	return nil
+
 }
 
 func (server *Server) Stop() {
@@ -126,62 +132,32 @@ func (server *Server) Stop() {
 func (server *Server) GenerateUniqueSessionID() uint32 {
 	server.sessionMux.Lock()
 	for {
-		_, ok := server.sessionMap[server.playerNumber]
+		_, ok := server.sessionMap[server.NewSessionSid]
 		if !ok {
 			break
 		}
-		server.playerNumber++
+		server.NewSessionSid++
 	}
-	server.sessionMap[server.playerNumber] = nil
+	server.sessionMap[server.NewSessionSid] = nil
 
 	server.sessionMux.Unlock()
-	return server.playerNumber
-}
-
-// func (server *Server) GenerateUniqueRoomID() int {
-// 	server.roomMux.Lock()
-// 	for {
-// 		_, ok := server.roomMap[server.roomNumber]
-// 		if !ok {
-// 			break
-// 		}
-// 		server.roomNumber++
-// 	}
-// 	server.roomMux.Unlock()
-// 	return server.roomNumber
-// }
-
-//输入是房间创造者的sid，房间号=房主的sid
-func (server *Server) GenerateNewRoom(playerList []uint32) {
-
-	newRoom := room.NewRoom(server, playerList)
-	fmt.Println(newRoom.GetRoomId())
-
+	return server.NewSessionSid
 }
 
 func (server *Server) SendMessageToClient(sid uint32, data []byte) {
+ 
 	server.sessionMap[sid].SendMessage(data)
-}
-
-func (server *Server) GetPlayerSession(sid uint32) face.ISession {
-	if session, ok := server.sessionMap[sid]; ok {
-		return session
-	}
-	return nil
 
 }
+func (server *Server) HandleMessage(request face.IRequest) {
+	server.messageHandle.AddToTaskQueue(request)
+}
+
 func (server *Server) GetMatchSystem() face.IMatchSystem {
 	return server.matchSystem
 }
+
 func (server *Server) GetRoom(roomId uint32) face.IRoom {
-	fmt.Println("roomMap")
-	for i := range server.roomMap {
-		fmt.Println(i)
-	}
-	fmt.Println("sessionMap")
-	for i := range server.sessionMap {
-		fmt.Println(i)
-	}
 	if room, ok := server.roomMap[roomId]; ok {
 		return room
 	}
@@ -190,12 +166,16 @@ func (server *Server) GetRoom(roomId uint32) face.IRoom {
 func (server *Server) AddRoom(roomId uint32, room face.IRoom) {
 	server.roomMap[roomId] = room
 }
-func (server *Server) DeleteRoom(roomId uint32) {
+func (server *Server) RemoveRoom(roomId uint32) {
 	delete(server.roomMap, roomId)
 }
 
+//测试用
 func (server *Server) GetAllPlayer() map[uint32]face.ISession {
 	return server.sessionMap
+}
+func InitServerServive(server face.IServer) {
+
 }
 
 func NewServer() face.IServer {
@@ -203,25 +183,11 @@ func NewServer() face.IServer {
 		IP:    "0.0.0.0:6666",
 		UDPIP: "0.0.0.0:7777",
 		// messageHandle: NewMessageHandler(),
-		sessionMap:   make(map[uint32]face.ISession),
-		roomMap:      make(map[uint32]face.IRoom),
-		roomNumber:   0,
-		playerNumber: 1,
+		sessionMap: make(map[uint32]face.ISession),
+		roomMap:    make(map[uint32]face.IRoom),
+
+		NewSessionSid: 1,
 	}
-	server.messageHandle = NewMessageHandler(server)
+
 	return server
 }
-
-// func NewMessageHandler() *MessageHandle {
-// 	return &MessageHandle{
-
-// 		WorkerPoolSize:    10,
-// 		TaskQueue:         make([]chan face.IRequest, 10),
-// 		roomMessageHandle: &room.RoomMessageHandle{},
-// 	}
-// }
-
-// func NewRoomMessageHandle() *RoomMessageHandle {
-// 	return &RoomMessageHandle{}
-
-// }

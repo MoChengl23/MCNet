@@ -10,6 +10,7 @@ type ISession interface {
 	GetConnection() net.Conn
 	GetSid() uint32
 	ChangeRoomId(roomId uint32)
+	GetCurrentRoomId() uint32
 
 	GetRemoteAddress() string
 	SendMessage(data []byte)

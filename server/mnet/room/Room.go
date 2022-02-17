@@ -1,9 +1,9 @@
 package room
 
 import (
-	"fmt"
 	"server/face"
-	"server/pb"
+
+	// "server/pb"
 
 	// "server/mnet"
 	"sync"
@@ -27,7 +27,7 @@ type SelectData struct {
 type Room struct {
 	server   face.IServer
 	stateMap map[RoomState]face.IRoomState
-	stateId  RoomState
+	currentState  RoomState
 	roomId   uint32
 	// playerSessions map[face.ISession]bool
 	playersid []uint32
@@ -40,7 +40,7 @@ type Room struct {
 func (room *Room) Init() {
 	room.server.AddRoom(room.roomId, room)
 
-	fmt.Println("New Room Init")
+	// fmt.Println("New Room Init")
 	length := len(room.playersid)
 	//Add StateMap
 	room.stateMap[roomStateConfirm] = NewRoomStateConfirm(room, length)
@@ -54,7 +54,7 @@ func (room *Room) Init() {
 }
 
 func (room *Room) Delete() {
-	room.server.DeleteRoom(room.roomId)
+	room.server.RemoveRoom(room.roomId)
 
 }
 
@@ -65,31 +65,36 @@ func (room *Room) Broadcast(data []byte) {
 		}
 	}
 }
-func (room *Room) SendIndex() {
 
-	for index, sid := range room.playersid {
-		mes := pb.MakeRoomIndex(int32(index))
-		room.server.SendMessageToClient(sid, mes)
-	}
+// func (room *Room) SendIndex() {
 
-}
+// 	for index, sid := range room.playersid {
+// 		mes := pb.MakeRoomIndex(int32(index))
+// 		room.server.SendMessageToClient(sid, mes)
+// 	}
+
+// }
 
 func (room *Room) ChangeRoomState(newState int) {
-	if int(room.stateId) != newState {
-		room.stateMap[room.stateId].Exit()
+
+	if int(room.currentState) != newState {
+		room.stateMap[room.currentState].Exit()
+
 	}
-	room.stateId = RoomState(newState)
-	room.stateMap[room.stateId].Enter()
+
+	room.currentState = RoomState(newState)
+
+	room.stateMap[room.currentState].Enter()
 
 }
 func (room *Room) ChangePlayersRoomId() {
 	for _, i := range room.playersid {
-		room.server.GetPlayerSession(i).ChangeRoomId(room.roomId)
+		room.server.GetSession(i).ChangeRoomId(room.roomId)
 	}
 }
 
 // func (room *Room) UpdateConfirm(mes *pb.PbMessage) {
-// 	if room.stateId == roomStateConfirm {
+// 	if room.currentState == roomStateConfirm {
 // 		playerIndex := room.GetPlayerIndex(mes.SId)
 // 		if playerIndex != -1 {
 // 			room.stateMap[roomStateConfirm].Update(playerIndex)
@@ -99,7 +104,7 @@ func (room *Room) ChangePlayersRoomId() {
 // }
 
 // func (room *Room) UpdateSelect(mes *pb.PbMessage) {
-// 	if room.stateId == roomStateSelect {
+// 	if room.currentState == roomStateSelect {
 // 		room.stateMap[roomStateSelect].Update(int(mes.PlayerData.PlayerIndex))
 // 	}
 
@@ -131,28 +136,20 @@ func (room *Room) GetPlayerIndex(sid uint32) int {
 func (room *Room) SetSelectData(selectArr []int) {
 	room.selectArr = selectArr
 }
-
-func (room *Room) GetState() face.IRoomState {
-	return room.stateMap[room.stateId]
+func (room *Room) GetSelectData() []int {
+	return room.selectArr
+}
+func (room *Room) GetCurrentState() face.IRoomState {
+	return room.stateMap[room.currentState]
 }
 
-func (room *Room) GetStateId() int {
-	return int(room.stateId)
-}
-
-//估计要删
-// func (room *Room) SetState(roomState face.IRoomState) {
-// 	if room.roomState != roomState {
-// 		room.roomState = roomState
-// 	}
-
-// }
+ 
 
 func NewRoom(_server face.IServer, playersid []uint32) *Room {
 	newRoom := &Room{
 		server:    _server,
 		stateMap:  make(map[RoomState]face.IRoomState),
-		stateId:   roomStateConfirm,
+		currentState:   roomStateConfirm,
 		roomId:    playersid[0],
 		playersid: playersid,
 		lock:      *new(sync.Mutex),

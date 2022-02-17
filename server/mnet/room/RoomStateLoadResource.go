@@ -24,7 +24,7 @@ func NewRoomStateLoadResource(room face.IRoom, length int) face.IRoomState {
 func (state *RoomStateLoadResource) Enter() {
 	fmt.Println("进入load阶段")
 
-	mes := pb.MakeRoomLoadCmd()
+	mes := pb.MakeRoomLoadCmd(state.room.GetSelectData())
 	state.room.Broadcast(mes)
 
 }

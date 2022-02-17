@@ -3,17 +3,10 @@ package pb;
 option go_package = "./pb";
 
 // this is a comment 
-message PlayerSelectData{
-    //具体的阵营选择还没写
-    int32 faction = 4;
-
-    bool isSelectDone = 5;
-    bool allSelectDone =6;
-
-  }
 
   
 message SelectData{
+    int32 index = 1;
 
     string playerName = 2;
     
@@ -25,6 +18,7 @@ message SelectData{
 
  message PbMessage {
   string name = 1;
+  
   enum CMD {
 
     login = 0;
@@ -57,10 +51,9 @@ message SelectData{
     dismissed = 7;
   }
   CmdRoom cmdRoom = 4;
-  //index代表在房间的索引
-  int32 index = 5;
+  
 
-  string chatMes = 11;
+  string chatMes = 5;
 
   
 
@@ -72,14 +65,18 @@ message SelectData{
 
  
   SelectData selectData = 6;
+  repeated SelectData roomSelectData = 7;
 
-  int32 loadPercent = 7;
 
-  int32 frameId = 8;
 
-  FightMessage SendFightMessage = 9;
+  int32 loadPercent = 8;
+  repeated int32 roomLoadPercent =9;
 
-  repeated FightMessage fightMessage = 10;
+  int32 frameId = 10;
+
+  FightMessage SendFightMessage = 11;
+
+  repeated FightMessage fightMessage = 12;
 
 }
 

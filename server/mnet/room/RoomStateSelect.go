@@ -29,7 +29,7 @@ func (state *RoomStateSelect) Enter() {
 	mes := pb.MakeRoomSelect()
 	state.room.Broadcast(mes)
 	fmt.Println("RoomSelect")
-	state.CheckTimeLimit()
+	go state.CheckTimeLimit()
 }
 
 func (state *RoomStateSelect) Dismiss() {
@@ -44,7 +44,6 @@ func (state *RoomStateSelect) Exit() {
 }
 
 func (state *RoomStateSelect) CheckTimeLimit() {
-
 	<-time.After(time.Second * 999)
 	fmt.Println("room confirm reachtime ")
 	state.Dismiss()
@@ -60,7 +59,8 @@ func (state *RoomStateSelect) Update(sid uint32, mes *pb.PbMessage) {
 
 	// }
 
-	// selectdata := pb.MakeRoomSelectData(mes)
+	// selectdata := pb.MakeRoomSelectData(mes,)
+	mes.SelectData.Index = int32(index)
 	state.room.Broadcast(pb.Byte(mes))
 
 	// mes := pb.MakeSelectData()

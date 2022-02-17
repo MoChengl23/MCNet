@@ -17,8 +17,8 @@ type MatchSystem struct {
 }
 
 func (match *MatchSystem) Init() {
-	fmt.Println("match System Init")
-	fmt.Println("初始匹配队列长度  ", match.matchQueue.Len())
+	// fmt.Println("match System Init")
+	// fmt.Println("初始匹配队列长度  ", match.matchQueue.Len())
 }
 
 func (match *MatchSystem) UpdateMatchQueue(message *pb.PbMessage, sid uint32) {
@@ -30,8 +30,6 @@ func (match *MatchSystem) UpdateMatchQueue(message *pb.PbMessage, sid uint32) {
 	case pb.PbMessage_quitMatch:
 		match.QuitMatchQueue(sid)
 
-	default:
-
 	}
 
 }
@@ -42,7 +40,7 @@ func (match *MatchSystem) EnterMatchQueue(sid uint32) {
 	match.matchQueue.PushBack(sid)
 
 	match.lock.Unlock()
-
+	
 	mes := pb.MakeJoinMatch()
 	match.server.SendMessageToClient(sid, mes)
 
@@ -66,15 +64,20 @@ func (match *MatchSystem) QuitMatchQueue(sid uint32) {
 }
 
 func (match *MatchSystem) GenerateNewRoom() {
+
 	match.lock.Lock()
+
 	roomPlayers := make([]uint32, match.matchlen)
 	for i := 0; i < match.matchlen; i++ {
 		sid := match.matchQueue.Front().Value.(uint32)
 		roomPlayers[i] = sid
 		match.matchQueue.Remove(match.matchQueue.Front())
 	}
+
 	newRoom := room.NewRoom(match.server, roomPlayers)
+
 	newRoom.Init()
+	fmt.Println("newww rom")
 
 	match.lock.Unlock()
 
@@ -86,7 +89,7 @@ func (match *MatchSystem) Update() {
 func NewMatchSystem(_server face.IServer) *MatchSystem {
 	return &MatchSystem{
 		server:   _server,
-		matchlen: 2,
+		matchlen: 1,
 		lock:     new(sync.Mutex),
 	}
 

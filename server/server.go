@@ -10,13 +10,12 @@ import (
 
 func main() {
 
-	a := mnet.NewTestStruct()
-	a.Test()
-	a.Print()
-	
+	// a := mnet.NewTestStruct()
+	// a.Test()
+	// a.Print()
 
-	// server := mnet.NewServer()
-	// server.Serve()
+	server := mnet.NewServer()
+	server.Serve()
 
 }
 func DoSomething() {

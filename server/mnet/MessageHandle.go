@@ -28,14 +28,12 @@ func (messageHandle *MessageHandle) Init() {
 }
 
 func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
-	fmt.Println("DoMesagehandle")
 
 	//测试下Pb能不能解码
 	mes := &pb.PbMessage{}
 	if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("收到的信息是 ", mes.Cmd)
 
 	switch mes.Cmd {
 	case pb.PbMessage_login:
@@ -52,14 +50,14 @@ func (messageHandle *MessageHandle) DoMessageHandler(request face.IRequest) {
 
 func (messageHandle *MessageHandle) ResponseLogin(sid uint32) {
 	mes := pb.MakeLogin()
-	fmt.Println(" response login")
+
 	messageHandle.server.SendMessageToClient(sid, mes)
 
 }
 func (messageHandle *MessageHandle) ResponseTest(sid uint32, mes1 *pb.PbMessage) {
 	mes := pb.Byte(mes1)
-	fmt.Println("test")
-	for sid, _ := range messageHandle.server.GetAllPlayer() {
+
+	for sid := range messageHandle.server.GetAllPlayer() {
 		messageHandle.server.SendMessageToClient(sid, mes)
 	}
 
@@ -75,22 +73,21 @@ func (messageHandle *MessageHandle) StartWorkerPool() {
 func (messageHandle *MessageHandle) StartOneWorker(workerID int, taskQueue chan face.IRequest) {
 	fmt.Println("WorkerId = ", workerID, "  Start")
 	for {
-		select {
-		case request := <-taskQueue:
+		request := <-taskQueue
+		messageHandle.DoMessageHandler(request)
+		fmt.Println(workerID, "work over")
 
-			messageHandle.DoMessageHandler(request)
-		}
 	}
 }
 func (messageHandle *MessageHandle) AddToTaskQueue(request face.IRequest) {
 
 	workerID := request.GetSession().GetSid() % messageHandle.WorkerPoolSize
 	fmt.Println("AddTaskQueue  ", workerID)
-	// workerID = uint32(rand.Intn(10))
-	// fmt.Println("AddTaskQueue  ", workerID)
-	// messageHandle.TaskQueue[workerID] <- request
+
+	messageHandle.TaskQueue[workerID] <- request
+
 	//消息队列有bug，先暂时这么处理
-	go messageHandle.DoMessageHandler(request)
+	// go messageHandle.DoMessageHandler(request)
 
 }
 

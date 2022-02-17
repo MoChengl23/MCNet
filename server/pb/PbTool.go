@@ -54,7 +54,6 @@ func MakeRoomIndex(index int32) []byte {
 	mes := &PbMessage{
 		Cmd:     PbMessage_room,
 		CmdRoom: PbMessage_confirm,
-		Index:   index,
 	}
 	return Byte(mes)
 }
@@ -82,15 +81,37 @@ func MakeRoomSelect() []byte {
 	return Byte(mes)
 }
 
-func MakeRoomSelectData(mes *PbMessage) {
+// func MakeRoomSelectData(singleMes *PbMessage, index int) []byte{
+ 
+// 	newSelectData := SelectData{
+// 		Index:         int32(index),
+// 		PlayerName:    "",
+// 		Faction:       0,
+// 		IsReady:       false,
+// 	}
+// 	mes := &PbMessage{
+// 		Cmd:     PbMessage_room,
+// 		CmdRoom: PbMessage_selectDate,
+// 		SelectData: &newSelectData,
 
-}
+// 	}
+// 	return Byte(mes)
 
-func MakeRoomLoadCmd() []byte {
-	mes := &PbMessage{
-		Cmd:     PbMessage_room,
-		CmdRoom: PbMessage_load,
+// }
+
+func MakeRoomLoadCmd(roomSelectData []int) []byte {
+	newRoomSelectData := []*SelectData{}
+	for _, i := range roomSelectData {
+		newRoomSelectData = append(newRoomSelectData, &SelectData{
+			PlayerName: string(i),
+			Faction:    int32(i)})
 	}
+	mes := &PbMessage{
+		Cmd:            PbMessage_room,
+		CmdRoom:        PbMessage_load,
+		RoomSelectData: newRoomSelectData,
+	}
+
 	return Byte(mes)
 }
 func MakeRoomLoadData(loadPercent int32) []byte {
