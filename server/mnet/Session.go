@@ -70,6 +70,7 @@ func (session *Session) StartReader() {
 }
 
 func (session *Session) SendMessage(data []byte) {
+	fmt.Println("send" , data)
 	session.messageChan <- data
 }
 

@@ -17,13 +17,7 @@ func (request *Request) GetMessage() []byte {
 func (request *Request) GetSession() face.ISession {
 	return request.session
 }
-func (request *Request) GetSid() uint32 {
-	return request.session.GetSid()
-}
-func (request *Request) GetRoomId() uint32 {
 
-	return request.session.GetCurrentRoomId()
-}
 
 func NewRequest(message []byte, session face.ISession) face.IRequest {
 	return &Request{

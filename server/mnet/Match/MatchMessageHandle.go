@@ -9,12 +9,12 @@ type MatchMessageHandle struct {
 	matchSystem face.IMatchSystem
 }
 
-func (matchMessageHandle *MatchMessageHandle) ResponseMatch(sid uint32, message *pb.PbMessage) {
-
+func (matchMessageHandle *MatchMessageHandle) Response(session face.ISession, message *pb.PbMessage) {
+	sid := session.GetSid()
 	matchMessageHandle.matchSystem.UpdateMatchQueue(message, sid)
 }
 
-func NewMatchMessageHandle(matchSystem face.IMatchSystem) *MatchMessageHandle {
+func NewMatchMessageHandle(matchSystem face.IMatchSystem) face.IMessageHandle {
 	return &MatchMessageHandle{
 		matchSystem: matchSystem,
 	}

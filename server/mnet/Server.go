@@ -22,7 +22,7 @@ type Server struct {
 
 	NewSessionSid uint32
 
-	messageHandle face.IMessageHandle
+	workerPool face.IWorkerPool
 	matchSystem   face.IMatchSystem
 }
 
@@ -95,8 +95,8 @@ func (server *Server) Init() {
 	server.matchSystem = match.NewMatchSystem(server)
 	server.matchSystem.Init()
 
-	server.messageHandle = NewMessageHandler(server)
-	server.messageHandle.Init()
+	server.workerPool = NewWorkerPool(server)
+	server.workerPool.Init()
 }
 
 func (server *Server) Serve() {
@@ -150,7 +150,7 @@ func (server *Server) SendMessageToClient(sid uint32, data []byte) {
 
 }
 func (server *Server) HandleMessage(request face.IRequest) {
-	server.messageHandle.AddToTaskQueue(request)
+	server.workerPool.AddToTaskQueue(request)
 }
 
 func (server *Server) GetMatchSystem() face.IMatchSystem {

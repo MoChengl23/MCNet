@@ -4,6 +4,4 @@ package face
 type IRequest interface {
 	GetMessage() []byte
 	GetSession() ISession
-	GetSid() uint32
-	GetRoomId() uint32
 }

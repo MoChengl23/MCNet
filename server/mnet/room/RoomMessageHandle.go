@@ -10,16 +10,18 @@ type RoomMessageHandle struct {
 	server face.IServer
 }
 
-func (messageHandle *RoomMessageHandle) ResponseRoom(sid uint32, roomId uint32, message *pb.PbMessage) {
-	// fmt.Println("当前房间号 ", roomId)
+func (messageHandle *RoomMessageHandle) Response(session face.ISession,  message *pb.PbMessage) {
+	sid := session.GetSid()
+	roomId := session.GetCurrentRoomId()
 	if roomId == 0 {
 		return
 
 	}
+	fmt.Println("Receive :", message);
 
 	room := messageHandle.server.GetRoom(roomId)
 	if room != nil {
-		// fmt.Println("这个房间的state是 ", room.GetStateId())
+	
 		room.GetCurrentState().Update(sid, message)
 	} else {
 		fmt.Println("No Room")
@@ -27,26 +29,8 @@ func (messageHandle *RoomMessageHandle) ResponseRoom(sid uint32, roomId uint32, 
 
 }
 
-// func (messageHandle *RoomMessageHandle) ResponseMatch(roomId uint32, message *pb.PbMessage) {
 
-// }
-// func (messageHandle *RoomMessageHandle) ResponseConfirm(roomId uint32, message *pb.PbMessage) {
-
-// }
-// func (messageHandle *RoomMessageHandle) ResponseRoomInit(roomId uint32, message *pb.PbMessage) {
-
-// }
-// func (messageHandle *RoomMessageHandle) ResponseSelect(roomId uint32, message *pb.PbMessage) {
-
-// }
-// func (messageHandle *RoomMessageHandle) ResponseLoadResource(roomId uint32, message *pb.PbMessage) {
-
-// }
-// func (messageHandle *RoomMessageHandle) ResponseFightStart(roomId uint32, message *pb.PbMessage) {
-
-// }
-
-func NewRoomMessageHandle(server face.IServer) face.IRoomMessageHandle {
+func NewRoomMessageHandle(server face.IServer) face.IMessageHandle {
 	return &RoomMessageHandle{
 		server: server,
 	}

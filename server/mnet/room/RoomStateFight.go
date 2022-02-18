@@ -1,7 +1,6 @@
 package room
 
 import (
-	"fmt"
 	"server/face"
 	"server/pb"
 	"server/timer/timer"
@@ -28,10 +27,12 @@ func NewRoomStateFight(room face.IRoom, length int) face.IRoomState {
 }
 
 func (state *RoomStateFight) Enter() {
-	fmt.Println("进入战斗阶段")
+ 
 	mes := pb.MakeFightStartCmd()
 	state.room.Broadcast(mes)
+	
 	state.mytimerticker.AddTickTimerTask(66, state.SyncLogicFrame)
+	
 }
 func (state *RoomStateFight) Exit() {
 

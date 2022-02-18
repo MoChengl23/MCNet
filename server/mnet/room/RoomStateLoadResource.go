@@ -35,15 +35,22 @@ func (state *RoomStateLoadResource) Exit() {
 func (state *RoomStateLoadResource) Update(sid uint32, mes *pb.PbMessage) {
 	index := state.room.GetPlayerIndex(sid)
 	loadPercent := mes.LoadPercent
-	if loadPercent == 100 {
+	switch mes.CmdRoom{
+	case pb.PbMessage_fightStart:
 		state.loadDone[index] = true
+		mes := pb.MakeRoomLoadData(100)
+		state.room.Broadcast(mes)
+		
 		if state.CheckAllLoadDone() {
 			state.room.ChangeRoomState(int(roomStateFight))
 		}
-	} else {
+	
+	case pb.PbMessage_loadData:
 		state.percent[index] = int(loadPercent)
+		
 		state.room.Broadcast(pb.Byte(mes))
-	}
+	
+}
 
 }
 func (state *RoomStateLoadResource) CheckAllLoadDone() bool {

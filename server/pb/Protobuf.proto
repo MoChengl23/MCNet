@@ -4,9 +4,12 @@ option go_package = "./pb";
 
 // this is a comment 
 
-  
+message AccountData{
+  string name = 1;
+}  
+
 message SelectData{
-    int32 index = 1;
+    
 
     string playerName = 2;
     
@@ -52,8 +55,8 @@ message SelectData{
   }
   CmdRoom cmdRoom = 4;
   
-
-  string chatMes = 5;
+  int32 roomIndex = 5;
+  string chatMes = 6;
 
   
 
@@ -64,19 +67,19 @@ message SelectData{
   
 
  
-  SelectData selectData = 6;
-  repeated SelectData roomSelectData = 7;
+  SelectData selectData = 7;
+  repeated SelectData roomSelectData = 8;
 
 
 
-  int32 loadPercent = 8;
-  repeated int32 roomLoadPercent =9;
+  int32 loadPercent = 9;
+  repeated int32 roomLoadPercent =10;
 
-  int32 frameId = 10;
+  int32 frameId = 11;
 
-  FightMessage SendFightMessage = 11;
+  FightMessage SendFightMessage = 12;
 
-  repeated FightMessage fightMessage = 12;
+  repeated FightMessage fightMessage = 13;
 
 }
 

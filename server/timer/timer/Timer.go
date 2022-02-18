@@ -14,11 +14,13 @@ type MyTimer struct {
 func (myTimer *MyTimer) UpdateTask() {
 	defer myTimer.ticker.Stop()
 	ticks := myTimer.ticker.C
+
 	for range ticks {
 		select {
 		case <-myTimer.needDelete:
 			return
 		default:
+		 
 			myTimer.callback()
 		}
 
@@ -35,6 +37,7 @@ func (myTimer *MyTimer) AddTickTimerTask(interval int, callback func()) {
 	myTimer.ticker = *time.NewTicker(time.Millisecond * time.Duration(interval))
 	myTimer.callback = callback
 	myTimer.needDelete = make(chan bool)
+ 
 	go myTimer.UpdateTask()
 
 }

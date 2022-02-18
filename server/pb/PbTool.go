@@ -50,13 +50,7 @@ func MakeRoomConfirm() []byte {
 	}
 	return Byte(mes)
 }
-func MakeRoomIndex(index int32) []byte {
-	mes := &PbMessage{
-		Cmd:     PbMessage_room,
-		CmdRoom: PbMessage_confirm,
-	}
-	return Byte(mes)
-}
+ 
 
 func MakeRoomDismiss() []byte {
 	mes := &PbMessage{
@@ -122,6 +116,8 @@ func MakeRoomLoadData(loadPercent int32) []byte {
 	}
 	return Byte(mes)
 }
+ 
+
 
 func MakeFightStartCmd() []byte {
 	mes := &PbMessage{

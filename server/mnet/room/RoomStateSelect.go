@@ -60,7 +60,7 @@ func (state *RoomStateSelect) Update(sid uint32, mes *pb.PbMessage) {
 	// }
 
 	// selectdata := pb.MakeRoomSelectData(mes,)
-	mes.SelectData.Index = int32(index)
+	mes.RoomIndex = int32(index)
 	state.room.Broadcast(pb.Byte(mes))
 
 	// mes := pb.MakeSelectData()
