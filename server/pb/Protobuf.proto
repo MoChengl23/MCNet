@@ -27,6 +27,7 @@ message SelectData{
     login = 0;
     match = 1;
     room = 2;
+    // 这个fight只是服务器发客户端
     fight = 3;
     chat = 4;
     fightEnd = 5;
@@ -49,7 +50,7 @@ message SelectData{
     loadData = 4;
 
     fightStart = 5;
-    
+    //这个fightop只是客户端发服务器
     fightOp = 6;
     dismissed = 7;
   }
@@ -77,7 +78,7 @@ message SelectData{
 
   int32 frameId = 11;
 
-  FightMessage SendFightMessage = 12;
+  FightMessage sendFightMessage = 12;
 
   repeated FightMessage fightMessage = 13;
 

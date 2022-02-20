@@ -32,7 +32,7 @@ func (session *Session) CheckAlive() {
 		select {
 		case <-session.isAlive:
 
-		case <-time.After(time.Second * 999):
+		case <-time.After(time.Second * 9999):
 			fmt.Println("Session die ")
 			return
 		}
@@ -41,7 +41,7 @@ func (session *Session) CheckAlive() {
 
 func (session *Session) StartReader() {
 	fmt.Println("Session Start Read")
-	defer session.Stop()
+	// defer session.Stop()
 	for {
 
 		buf := make([]byte, 4096)
@@ -70,7 +70,7 @@ func (session *Session) StartReader() {
 }
 
 func (session *Session) SendMessage(data []byte) {
-	fmt.Println("send" , data)
+ 
 	session.messageChan <- data
 }
 
@@ -99,6 +99,7 @@ func (session *Session) Stop() {
 
 	//关闭该链接全部管道
 	close(session.isAlive)
+	close(session.messageChan)
 }
 
 func (session *Session) ChangeRoomId(roomId uint32) {

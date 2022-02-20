@@ -32,6 +32,7 @@ func (state *RoomStateFight) Enter() {
 	state.room.Broadcast(mes)
 	
 	state.mytimerticker.AddTickTimerTask(66, state.SyncLogicFrame)
+
 	
 }
 func (state *RoomStateFight) Exit() {
@@ -41,6 +42,7 @@ func (state *RoomStateFight) Exit() {
 func (state *RoomStateFight) Update(sid uint32, mes *pb.PbMessage) {
 
 	state.fightOpArr = append(state.fightOpArr, mes.SendFightMessage)
+	
 
 }
 
@@ -48,6 +50,7 @@ func (state *RoomStateFight) SyncLogicFrame() {
 	state.frameId++
 
 	mes := pb.MakeFightData(state.frameId, state.fightOpArr)
+	 
 	state.room.Broadcast(mes)
 	state.fightOpArr = []*pb.FightMessage{}
 }

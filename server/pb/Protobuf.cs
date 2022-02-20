@@ -34,7 +34,7 @@ namespace Pb {
             "CnNlbGVjdERhdGEYByABKAsyDi5wYi5TZWxlY3REYXRhEiYKDnJvb21TZWxl",
             "Y3REYXRhGAggAygLMg4ucGIuU2VsZWN0RGF0YRITCgtsb2FkUGVyY2VudBgJ",
             "IAEoBRIXCg9yb29tTG9hZFBlcmNlbnQYCiADKAUSDwoHZnJhbWVJZBgLIAEo",
-            "BRIqChBTZW5kRmlnaHRNZXNzYWdlGAwgASgLMhAucGIuRmlnaHRNZXNzYWdl",
+            "BRIqChBzZW5kRmlnaHRNZXNzYWdlGAwgASgLMhAucGIuRmlnaHRNZXNzYWdl",
             "EiYKDGZpZ2h0TWVzc2FnZRgNIAMoCzIQLnBiLkZpZ2h0TWVzc2FnZSJICgND",
             "TUQSCQoFbG9naW4QABIJCgVtYXRjaBABEggKBHJvb20QAhIJCgVmaWdodBAD",
             "EggKBGNoYXQQBBIMCghmaWdodEVuZBAFIigKCENtZE1hdGNoEg0KCWpvaW5N",
@@ -734,7 +734,7 @@ namespace Pb {
       }
     }
 
-    /// <summary>Field number for the "SendFightMessage" field.</summary>
+    /// <summary>Field number for the "sendFightMessage" field.</summary>
     public const int SendFightMessageFieldNumber = 12;
     private global::Pb.FightMessage sendFightMessage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

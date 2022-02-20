@@ -129,8 +129,7 @@ func MakeFightStartCmd() []byte {
 
 func MakeFightData(frameId int, fightMessage []*FightMessage) []byte {
 	mes := &PbMessage{
-		Cmd:          PbMessage_room,
-		CmdRoom:      PbMessage_fightOp,
+		Cmd:          PbMessage_fight,
 		FrameId:      int32(frameId),
 		FightMessage: fightMessage,
 	}
