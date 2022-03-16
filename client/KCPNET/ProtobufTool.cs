@@ -36,3 +36,5 @@ namespace KCPNET
     }
     
 }
+
+//  dotnet build -o D:\1\Dll 

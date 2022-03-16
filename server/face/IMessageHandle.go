@@ -5,5 +5,6 @@ import (
 )
 
 type IMessageHandle interface {
+	Init(server IServer)
 	Response(session ISession, message *pb.PbMessage)
 }

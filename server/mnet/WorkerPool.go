@@ -3,9 +3,10 @@ package mnet
 import (
 	"fmt"
 	"server/face"
-	match "server/mnet/Match"
-	"server/mnet/room"
+	"server/mnet/matchSystem"
+	"server/mnet/roomSystem"
 	"server/pb"
+	"server/singleton"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -19,11 +20,20 @@ type WorkerPool struct {
 	roomMessageHandle  face.IMessageHandle
 }
 
-func (workerPool *WorkerPool) Init() {
+func (workerPool *WorkerPool) Init(server face.IServer) {
 	fmt.Println("WorkerPool Init")
+	workerPool.server = server
+	workerPool.WorkerPoolSize = 10
+
+	workerPool.TaskQueue = make([]chan face.IRequest, 10)
+
 	workerPool.StartWorkerPool()
-	workerPool.matchMessageHandle = match.NewMatchMessageHandle(workerPool.server.GetMatchSystem())
-	workerPool.roomMessageHandle = room.NewRoomMessageHandle(workerPool.server)
+	singleton.Singleton[matchSystem.MatchMessageHandle]().Init(workerPool.server)
+	singleton.Singleton[roomSystem.RoomMessageHandle]().Init(workerPool.server)
+	// workerPool.matchMessageHandle = singleton.Singleton[matchSystem.MatchMessageHandle]()
+	// workerPool.roomMessageHandle = singleton.Singleton[roomSystem.RoomMessageHandle]()
+	// workerPool.matchMessageHandle = matchSystem.NewMatchMessageHandle(workerPool.server.GetMatchSystem())
+	// workerPool.roomMessageHandle = roomSystem.NewRoomMessageHandle(workerPool.server)
 
 }
 
@@ -40,11 +50,13 @@ func (workerPool *WorkerPool) DoMessageHandler(request face.IRequest) {
 		workerPool.ResponseLogin(request.GetSession().GetSid())
 
 	case pb.PbMessage_match:
-		workerPool.matchMessageHandle.Response(request.GetSession(), mes)
+		singleton.Singleton[matchSystem.MatchMessageHandle]().Response(request.GetSession(), mes)
+		// workerPool.matchMessageHandle.Response(request.GetSession(), mes)
 	case pb.PbMessage_room:
-		workerPool.roomMessageHandle.Response(request.GetSession(), mes)
-		// case pb.PbMessage_fight:
-		// 	workerPool.ResponseTest(request.GetSid(), mes)
+		singleton.Singleton[roomSystem.RoomMessageHandle]().Response(request.GetSession(), mes)
+		// workerPool.roomMessageHandle.Response(request.GetSession(), mes)
+	case pb.PbMessage_chat:
+		workerPool.ResponseTest(request.GetSession())
 	}
 }
 
@@ -54,17 +66,19 @@ func (workerPool *WorkerPool) ResponseLogin(sid uint32) {
 	workerPool.server.SendMessageToClient(sid, mes)
 
 }
-//test
-func (workerPool *WorkerPool) ResponseTest(sid uint32, mes1 *pb.PbMessage) {
-	mes := pb.Byte(mes1)
 
-	for sid := range workerPool.server.GetAllPlayer() {
-		workerPool.server.SendMessageToClient(sid, mes)
-	}
+//test
+func (workerPool *WorkerPool) ResponseTest(session face.ISession) {
+	// mes := pb.Byte(mes1)
+
+	// for sid := range workerPool.server.GetAllPlayer() {
+	// 	workerPool.server.SendMessageToClient(sid, mes)
+	// }
 
 }
 
 func (workerPool *WorkerPool) StartWorkerPool() {
+
 	for i := 0; i < int(workerPool.WorkerPoolSize); i++ {
 		workerPool.TaskQueue[i] = make(chan face.IRequest)
 		go workerPool.StartOneWorker(i, workerPool.TaskQueue[i])
@@ -72,7 +86,8 @@ func (workerPool *WorkerPool) StartWorkerPool() {
 
 }
 func (workerPool *WorkerPool) StartOneWorker(workerID int, taskQueue chan face.IRequest) {
-	fmt.Println("WorkerId = ", workerID, "  Start")
+
+	// fmt.Println("WorkerId = ", workerID, "  Start")
 	for {
 		request := <-taskQueue
 		workerPool.DoMessageHandler(request)
@@ -89,12 +104,12 @@ func (workerPool *WorkerPool) AddToTaskQueue(request face.IRequest) {
 
 }
 
-func NewWorkerPool(_server face.IServer) *WorkerPool {
-	return &WorkerPool{
-		server:         _server,
-		WorkerPoolSize: 10,
-		TaskQueue:      make([]chan face.IRequest, 10),
-		// roomMessageHandle: &room.RoomMessageHandle{},
-	}
+// func NewWorkerPool(_server face.IServer) *WorkerPool {
+// 	return &WorkerPool{
+// 		server:         _server,
+// 		WorkerPoolSize: 10,
+// 		TaskQueue:      make([]chan face.IRequest, 10),
+// 		// roomMessageHandle: &room.RoomMessageHandle{},
+// 	}
 
-}
+// }

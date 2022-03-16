@@ -95,11 +95,12 @@ message FightMessage{
 
   repeated int32 selectedUnit = 3;
   // move
-  repeated int32 endPos = 4;
+
+  int32 endPos = 5;
   //fight
-  int32 enemyUnit = 5;
+  int32 enemyUnit = 6;
   //interact
-  int32 interactObject = 6;
+  int32 interactObject = 7;
 
 }
 

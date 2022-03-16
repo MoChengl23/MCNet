@@ -41,18 +41,19 @@ namespace Pb {
             "YXRjaBAAEg0KCXF1aXRNYXRjaBABInYKB0NtZFJvb20SCwoHY29uZmlybRAA",
             "EgoKBnNlbGVjdBABEg4KCnNlbGVjdERhdGUQAhIICgRsb2FkEAMSDAoIbG9h",
             "ZERhdGEQBBIOCgpmaWdodFN0YXJ0EAUSCwoHZmlnaHRPcBAGEg0KCWRpc21p",
-            "c3NlZBAHIr4BCgxGaWdodE1lc3NhZ2USLQoJYmF0dGxlQ01EGAEgASgOMhou",
+            "c3NlZBAHItABCgxGaWdodE1lc3NhZ2USLQoJYmF0dGxlQ01EGAEgASgOMhou",
             "cGIuRmlnaHRNZXNzYWdlLkJhdHRsZUNNRBIUCgxzZWxlY3RlZFVuaXQYAyAD",
-            "KAUSDgoGZW5kUG9zGAQgAygFEhEKCWVuZW15VW5pdBgFIAEoBRIWCg5pbnRl",
-            "cmFjdE9iamVjdBgGIAEoBSIuCglCYXR0bGVDTUQSCAoEbW92ZRAAEgkKBWZp",
-            "Z2h0EAESDAoIaW50ZXJhY3QQAkIGWgQuL3BiYgZwcm90bzM="));
+            "KAUSEAoIc3RhcnRQb3MYBCABKAUSDgoGZW5kUG9zGAUgASgFEhEKCWVuZW15",
+            "VW5pdBgGIAEoBRIWCg5pbnRlcmFjdE9iamVjdBgHIAEoBSIuCglCYXR0bGVD",
+            "TUQSCAoEbW92ZRAAEgkKBWZpZ2h0EAESDAoIaW50ZXJhY3QQAkIGWgQuL3Bi",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Pb.AccountData), global::Pb.AccountData.Parser, new[]{ "Name" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pb.SelectData), global::Pb.SelectData.Parser, new[]{ "PlayerName", "ChatMes", "Faction", "IsReady" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pb.PbMessage), global::Pb.PbMessage.Parser, new[]{ "Name", "Cmd", "CmdMatch", "CmdRoom", "RoomIndex", "ChatMes", "SelectData", "RoomSelectData", "LoadPercent", "RoomLoadPercent", "FrameId", "SendFightMessage", "FightMessage" }, null, new[]{ typeof(global::Pb.PbMessage.Types.CMD), typeof(global::Pb.PbMessage.Types.CmdMatch), typeof(global::Pb.PbMessage.Types.CmdRoom) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.FightMessage), global::Pb.FightMessage.Parser, new[]{ "BattleCMD", "SelectedUnit", "EndPos", "EnemyUnit", "InteractObject" }, null, new[]{ typeof(global::Pb.FightMessage.Types.BattleCMD) }, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.FightMessage), global::Pb.FightMessage.Parser, new[]{ "BattleCMD", "SelectedUnit", "StartPos", "EndPos", "EnemyUnit", "InteractObject" }, null, new[]{ typeof(global::Pb.FightMessage.Types.BattleCMD) }, null, null)
           }));
     }
     #endregion
@@ -1175,6 +1176,9 @@ namespace Pb {
         [pbr::OriginalName("login")] Login = 0,
         [pbr::OriginalName("match")] Match = 1,
         [pbr::OriginalName("room")] Room = 2,
+        /// <summary>
+        /// 这个fight只是服务器发客户端
+        /// </summary>
         [pbr::OriginalName("fight")] Fight = 3,
         [pbr::OriginalName("chat")] Chat = 4,
         [pbr::OriginalName("fightEnd")] FightEnd = 5,
@@ -1192,6 +1196,9 @@ namespace Pb {
         [pbr::OriginalName("load")] Load = 3,
         [pbr::OriginalName("loadData")] LoadData = 4,
         [pbr::OriginalName("fightStart")] FightStart = 5,
+        /// <summary>
+        ///这个fightop只是客户端发服务器
+        /// </summary>
         [pbr::OriginalName("fightOp")] FightOp = 6,
         [pbr::OriginalName("dismissed")] Dismissed = 7,
       }
@@ -1237,7 +1244,8 @@ namespace Pb {
     public FightMessage(FightMessage other) : this() {
       battleCMD_ = other.battleCMD_;
       selectedUnit_ = other.selectedUnit_.Clone();
-      endPos_ = other.endPos_.Clone();
+      startPos_ = other.startPos_;
+      endPos_ = other.endPos_;
       enemyUnit_ = other.enemyUnit_;
       interactObject_ = other.interactObject_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -1272,22 +1280,35 @@ namespace Pb {
       get { return selectedUnit_; }
     }
 
-    /// <summary>Field number for the "endPos" field.</summary>
-    public const int EndPosFieldNumber = 4;
-    private static readonly pb::FieldCodec<int> _repeated_endPos_codec
-        = pb::FieldCodec.ForInt32(34);
-    private readonly pbc::RepeatedField<int> endPos_ = new pbc::RepeatedField<int>();
+    /// <summary>Field number for the "startPos" field.</summary>
+    public const int StartPosFieldNumber = 4;
+    private int startPos_;
     /// <summary>
     /// move
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<int> EndPos {
+    public int StartPos {
+      get { return startPos_; }
+      set {
+        startPos_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "endPos" field.</summary>
+    public const int EndPosFieldNumber = 5;
+    private int endPos_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int EndPos {
       get { return endPos_; }
+      set {
+        endPos_ = value;
+      }
     }
 
     /// <summary>Field number for the "enemyUnit" field.</summary>
-    public const int EnemyUnitFieldNumber = 5;
+    public const int EnemyUnitFieldNumber = 6;
     private int enemyUnit_;
     /// <summary>
     ///fight
@@ -1302,7 +1323,7 @@ namespace Pb {
     }
 
     /// <summary>Field number for the "interactObject" field.</summary>
-    public const int InteractObjectFieldNumber = 6;
+    public const int InteractObjectFieldNumber = 7;
     private int interactObject_;
     /// <summary>
     ///interact
@@ -1333,7 +1354,8 @@ namespace Pb {
       }
       if (BattleCMD != other.BattleCMD) return false;
       if(!selectedUnit_.Equals(other.selectedUnit_)) return false;
-      if(!endPos_.Equals(other.endPos_)) return false;
+      if (StartPos != other.StartPos) return false;
+      if (EndPos != other.EndPos) return false;
       if (EnemyUnit != other.EnemyUnit) return false;
       if (InteractObject != other.InteractObject) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -1345,7 +1367,8 @@ namespace Pb {
       int hash = 1;
       if (BattleCMD != global::Pb.FightMessage.Types.BattleCMD.Move) hash ^= BattleCMD.GetHashCode();
       hash ^= selectedUnit_.GetHashCode();
-      hash ^= endPos_.GetHashCode();
+      if (StartPos != 0) hash ^= StartPos.GetHashCode();
+      if (EndPos != 0) hash ^= EndPos.GetHashCode();
       if (EnemyUnit != 0) hash ^= EnemyUnit.GetHashCode();
       if (InteractObject != 0) hash ^= InteractObject.GetHashCode();
       if (_unknownFields != null) {
@@ -1371,13 +1394,20 @@ namespace Pb {
         output.WriteEnum((int) BattleCMD);
       }
       selectedUnit_.WriteTo(output, _repeated_selectedUnit_codec);
-      endPos_.WriteTo(output, _repeated_endPos_codec);
-      if (EnemyUnit != 0) {
+      if (StartPos != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(StartPos);
+      }
+      if (EndPos != 0) {
         output.WriteRawTag(40);
+        output.WriteInt32(EndPos);
+      }
+      if (EnemyUnit != 0) {
+        output.WriteRawTag(48);
         output.WriteInt32(EnemyUnit);
       }
       if (InteractObject != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(56);
         output.WriteInt32(InteractObject);
       }
       if (_unknownFields != null) {
@@ -1395,13 +1425,20 @@ namespace Pb {
         output.WriteEnum((int) BattleCMD);
       }
       selectedUnit_.WriteTo(ref output, _repeated_selectedUnit_codec);
-      endPos_.WriteTo(ref output, _repeated_endPos_codec);
-      if (EnemyUnit != 0) {
+      if (StartPos != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(StartPos);
+      }
+      if (EndPos != 0) {
         output.WriteRawTag(40);
+        output.WriteInt32(EndPos);
+      }
+      if (EnemyUnit != 0) {
+        output.WriteRawTag(48);
         output.WriteInt32(EnemyUnit);
       }
       if (InteractObject != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(56);
         output.WriteInt32(InteractObject);
       }
       if (_unknownFields != null) {
@@ -1418,7 +1455,12 @@ namespace Pb {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) BattleCMD);
       }
       size += selectedUnit_.CalculateSize(_repeated_selectedUnit_codec);
-      size += endPos_.CalculateSize(_repeated_endPos_codec);
+      if (StartPos != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(StartPos);
+      }
+      if (EndPos != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EndPos);
+      }
       if (EnemyUnit != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(EnemyUnit);
       }
@@ -1441,7 +1483,12 @@ namespace Pb {
         BattleCMD = other.BattleCMD;
       }
       selectedUnit_.Add(other.selectedUnit_);
-      endPos_.Add(other.endPos_);
+      if (other.StartPos != 0) {
+        StartPos = other.StartPos;
+      }
+      if (other.EndPos != 0) {
+        EndPos = other.EndPos;
+      }
       if (other.EnemyUnit != 0) {
         EnemyUnit = other.EnemyUnit;
       }
@@ -1472,16 +1519,19 @@ namespace Pb {
             selectedUnit_.AddEntriesFrom(input, _repeated_selectedUnit_codec);
             break;
           }
-          case 34:
           case 32: {
-            endPos_.AddEntriesFrom(input, _repeated_endPos_codec);
+            StartPos = input.ReadInt32();
             break;
           }
           case 40: {
-            EnemyUnit = input.ReadInt32();
+            EndPos = input.ReadInt32();
             break;
           }
           case 48: {
+            EnemyUnit = input.ReadInt32();
+            break;
+          }
+          case 56: {
             InteractObject = input.ReadInt32();
             break;
           }
@@ -1509,16 +1559,19 @@ namespace Pb {
             selectedUnit_.AddEntriesFrom(ref input, _repeated_selectedUnit_codec);
             break;
           }
-          case 34:
           case 32: {
-            endPos_.AddEntriesFrom(ref input, _repeated_endPos_codec);
+            StartPos = input.ReadInt32();
             break;
           }
           case 40: {
-            EnemyUnit = input.ReadInt32();
+            EndPos = input.ReadInt32();
             break;
           }
           case 48: {
+            EnemyUnit = input.ReadInt32();
+            break;
+          }
+          case 56: {
             InteractObject = input.ReadInt32();
             break;
           }

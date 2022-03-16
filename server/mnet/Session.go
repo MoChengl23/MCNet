@@ -6,6 +6,7 @@ import (
 
 	"server/face"
 	"server/pb"
+	"server/singleton"
 	"time"
 
 	"github.com/xtaci/kcp-go/v5"
@@ -62,15 +63,15 @@ func (session *Session) StartReader() {
 		if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
 			fmt.Println(err)
 		}
-
-		session.server.HandleMessage(request)
+		singleton.Singleton[WorkerPool]().AddToTaskQueue(request)
+		// session.server.HandleMessage(request)
 
 		session.isAlive <- true
 	}
 }
 
 func (session *Session) SendMessage(data []byte) {
- 
+
 	session.messageChan <- data
 }
 

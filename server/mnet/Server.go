@@ -1,11 +1,20 @@
 package mnet
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
+	"io"
 	"net"
+	"os"
 	"server/face"
-	match "server/mnet/Match"
+	"server/mnet/matchSystem"
+
+	// "server/mnet/matchSystem"
+
+	// "server/mnet/matchSystem"
+	"server/singleton"
+	"time"
 
 	"sync"
 
@@ -22,12 +31,12 @@ type Server struct {
 
 	NewSessionSid uint32
 
-	workerPool face.IWorkerPool
-	matchSystem   face.IMatchSystem
+	workerPool  face.IWorkerPool
+	matchSystem face.IMatchSystem
 }
 
 func (server *Server) Start() {
-	fmt.Println("Start Server")
+	go server.PrintLogo()
 
 	go server.ListenUDP()
 
@@ -92,11 +101,13 @@ func (server *Server) ListenKCP() {
 }
 
 func (server *Server) Init() {
-	server.matchSystem = match.NewMatchSystem(server)
-	server.matchSystem.Init()
+	// server.matchSystem = matchSystem.NewMatchSystem(server)
+	// server.matchSystem.Init()
+	singleton.Singleton[matchSystem.MatchSystem]().Init(server)
+	singleton.Singleton[WorkerPool]().Init(server)
 
-	server.workerPool = NewWorkerPool(server)
-	server.workerPool.Init()
+	// server.workerPool = NewWorkerPool(server)
+	// server.workerPool.Init()
 }
 
 func (server *Server) Serve() {
@@ -145,12 +156,13 @@ func (server *Server) GenerateUniqueSessionID() uint32 {
 }
 
 func (server *Server) SendMessageToClient(sid uint32, data []byte) {
- 
+
 	server.sessionMap[sid].SendMessage(data)
 
 }
 func (server *Server) HandleMessage(request face.IRequest) {
-	server.workerPool.AddToTaskQueue(request)
+	singleton.Singleton[WorkerPool]().AddToTaskQueue(request)
+	// server.workerPool.AddToTaskQueue(request)
 }
 
 func (server *Server) GetMatchSystem() face.IMatchSystem {
@@ -190,4 +202,25 @@ func NewServer() face.IServer {
 	}
 
 	return server
+}
+
+func (server *Server) PrintLogo() {
+
+	file, err := os.Open("./logo.txt")
+	if err != nil {
+		fmt.Print("err")
+		return
+	}
+	defer file.Close()
+	reader := bufio.NewReader(file)
+	for {
+		line, err := reader.ReadBytes('\n')
+		fmt.Print(string(line))
+		if err == io.EOF {
+			break
+		}
+
+		time.Sleep(time.Duration(100) * time.Millisecond)
+	}
+
 }

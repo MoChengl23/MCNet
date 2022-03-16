@@ -21,7 +21,7 @@ type IRoom interface {
 	ChangePlayersRoomId()
 	// GetState() IRoomState
 	GetCurrentState() IRoomState
-	GetPlayerIndex(sid uint32) int
+	GetPlayerIndex(session ISession) int
 	SetSelectData(selectArr []int)
 	GetSelectData() []int
 

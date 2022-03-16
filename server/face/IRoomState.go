@@ -5,5 +5,5 @@ import "server/pb"
 type IRoomState interface {
 	Enter()
 	Exit()
-	Update(sid uint32, mes *pb.PbMessage)
+	Update(session ISession, mes *pb.PbMessage)
 }
