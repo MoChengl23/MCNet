@@ -2,6 +2,7 @@ package singleton
 
 import (
 	"reflect"
+	"server/face"
 	"sync"
 )
 
@@ -17,6 +18,10 @@ func Singleton[T any]() (t *T) {
 	}
 
 	v = new(T)
+
 	v, _ = cache.LoadOrStore(hash, v)
+
+	v.(face.ISingletonItem).Init()
+
 	return v.(*T)
 }

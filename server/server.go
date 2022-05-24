@@ -11,23 +11,8 @@ import (
 
 func main() {
 
-
-
-	server := mnet.NewServer()
-	server.Serve()
-
-
-
-
-
- 
-
-	 
- 
-
-
-
-
+	mnet.ServerStartWork()
+	// server.Serve()
 
 }
 func DoSomething() {

@@ -3,14 +3,17 @@ package roomSystem
 import (
 	"fmt"
 	"server/face"
+	"server/mnet/connectPool"
 	"server/pb"
+	"server/singleton"
 )
 
 type RoomMessageHandle struct {
-	server face.IServer
+	connectPool *connectPool.ConnectPool
 }
-func (messageHandle *RoomMessageHandle) Init(server face.IServer){
-	messageHandle.server = server
+
+func (messageHandle *RoomMessageHandle) Init() {
+	messageHandle.connectPool = singleton.Singleton[connectPool.ConnectPool]()
 }
 
 func (messageHandle *RoomMessageHandle) Response(session face.ISession, message *pb.PbMessage) {
@@ -22,19 +25,12 @@ func (messageHandle *RoomMessageHandle) Response(session face.ISession, message 
 	}
 	fmt.Println("Receive :", message)
 
-	room := messageHandle.server.GetRoom(roomId)
+	room := messageHandle.connectPool.GetRoom(roomId)
 	if room != nil {
 
 		room.GetCurrentState().Update(session, message)
 	} else {
 		fmt.Println("No Room")
-	}
-
-}
-
-func NewRoomMessageHandle(server face.IServer) face.IMessageHandle {
-	return &RoomMessageHandle{
-		server: server,
 	}
 
 }

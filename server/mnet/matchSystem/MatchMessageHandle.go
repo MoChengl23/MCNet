@@ -10,7 +10,7 @@ type MatchMessageHandle struct {
 	matchSystem face.IMatchSystem
 }
 
-func (messageHandle *MatchMessageHandle) Init(server face.IServer) {
+func (messageHandle *MatchMessageHandle) Init( ) {
 
 }
 

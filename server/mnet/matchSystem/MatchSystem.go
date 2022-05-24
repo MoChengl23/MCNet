@@ -11,18 +11,16 @@ import (
 )
 
 type MatchSystem struct {
-	server     face.IServer
 	matchQueue list.List
 	matchlen   int
 	lock       *sync.Mutex
 }
 
-func (match *MatchSystem) Init(server face.IServer) {
-	match.server = server
-	match.matchlen = 3
+func (match *MatchSystem) Init() {
+
+	match.matchlen = 4
 	match.lock = new(sync.Mutex)
-	// fmt.Println("match System Init")
-	// fmt.Println("初始匹配队列长度  ", match.matchQueue.Len())
+
 }
 
 func (match *MatchSystem) UpdateMatchQueue(message *pb.PbMessage, session face.ISession) {
@@ -82,23 +80,11 @@ func (match *MatchSystem) GenerateNewRoom() {
 		match.matchQueue.Remove(match.matchQueue.Front())
 	}
 
-	newRoom := roomSystem.NewRoom(match.server, roomPlayerSession)
+	newRoom := roomSystem.NewRoom(roomPlayerSession)
 
 	newRoom.Init()
 	fmt.Println("newww rom")
 
 	match.lock.Unlock()
-
-}
-
-func (match *MatchSystem) Update() {
-
-}
-func NewMatchSystem(_server face.IServer) *MatchSystem {
-	return &MatchSystem{
-		server:   _server,
-		matchlen: 1,
-		lock:     new(sync.Mutex),
-	}
 
 }

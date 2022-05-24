@@ -8,31 +8,23 @@ import (
 	"net"
 	"os"
 	"server/face"
+	"server/singleton"
+
 	"server/mnet/matchSystem"
 
-	// "server/mnet/matchSystem"
+	"server/mnet/connectPool"
 
-	// "server/mnet/matchSystem"
-	"server/singleton"
 	"time"
-
-	"sync"
 
 	"github.com/xtaci/kcp-go/v5"
 )
 
 type Server struct {
-	IP         string
-	UDPIP      string
-	sessionMap map[uint32]face.ISession //存放所有玩家的连接
-
-	sessionMux sync.Mutex
-	roomMap    map[uint32]face.IRoom //存放所有房间
-
-	NewSessionSid uint32
-
-	workerPool  face.IWorkerPool
-	matchSystem face.IMatchSystem
+	IP             string
+	UDPIP          string
+	connectionPool *connectPool.ConnectPool
+	workerPool     face.IWorkerPool
+	matchSystem    face.IMatchSystem
 }
 
 func (server *Server) Start() {
@@ -69,7 +61,7 @@ func (server *Server) ListenUDP() {
 
 				//某个客户端申请连接,分配一个sid给它
 				buf := make([]byte, 4)
-				sid := server.GenerateUniqueSessionID()
+				sid := server.connectionPool.GenerateUniqueSessionID()
 				fmt.Println("UDPid", sid)
 				binary.BigEndian.PutUint32(buf, sid)
 				// fmt.Println("unique sid ", buf)
@@ -101,17 +93,19 @@ func (server *Server) ListenKCP() {
 }
 
 func (server *Server) Init() {
-	// server.matchSystem = matchSystem.NewMatchSystem(server)
-	// server.matchSystem.Init()
-	singleton.Singleton[matchSystem.MatchSystem]().Init(server)
-	singleton.Singleton[WorkerPool]().Init(server)
+	fmt.Println("Server Init")
+	server.IP = "0.0.0.0:6666"
+	server.UDPIP = "0.0.0.0:7777"
+	server.connectionPool = singleton.Singleton[connectPool.ConnectPool]()
+	// server.connectionPool.Init()
 
-	// server.workerPool = NewWorkerPool(server)
-	// server.workerPool.Init()
+	singleton.Singleton[matchSystem.MatchSystem]().Init()
+
 }
 
 func (server *Server) Serve() {
-	server.Init()
+
+	// server.Init()
 	server.Start()
 
 	select {}
@@ -120,89 +114,27 @@ func (server *Server) Serve() {
 func (server *Server) AddSession(conn *kcp.UDPSession) {
 	sid := conn.GetConv()
 
-	newSession := NewSession(server, conn, sid)
-	server.sessionMap[sid] = newSession
+	newSession := NewSession(conn, sid)
+	server.connectionPool.AddSession(sid, newSession)
 	newSession.Start()
 
 	fmt.Println("a new session connect ")
 }
 func (server *Server) RemoveSession(sid uint32) {
-	delete(server.sessionMap, sid)
+	server.connectionPool.DeleteSession(sid)
+	// delete(server.sessionMap, sid)
 }
 func (server *Server) GetSession(sid uint32) face.ISession {
-	if session, ok := server.sessionMap[sid]; ok {
-		return session
-	}
-	return nil
+
+	return server.connectionPool.GetSession(sid)
 
 }
 
 func (server *Server) Stop() {
 
 }
-func (server *Server) GenerateUniqueSessionID() uint32 {
-	server.sessionMux.Lock()
-	for {
-		_, ok := server.sessionMap[server.NewSessionSid]
-		if !ok {
-			break
-		}
-		server.NewSessionSid++
-	}
-	server.sessionMap[server.NewSessionSid] = nil
-
-	server.sessionMux.Unlock()
-	return server.NewSessionSid
-}
-
-func (server *Server) SendMessageToClient(sid uint32, data []byte) {
-
-	server.sessionMap[sid].SendMessage(data)
-
-}
-func (server *Server) HandleMessage(request face.IRequest) {
-	singleton.Singleton[WorkerPool]().AddToTaskQueue(request)
-	// server.workerPool.AddToTaskQueue(request)
-}
-
-func (server *Server) GetMatchSystem() face.IMatchSystem {
-	return server.matchSystem
-}
-
-func (server *Server) GetRoom(roomId uint32) face.IRoom {
-	if room, ok := server.roomMap[roomId]; ok {
-		return room
-	}
-	return nil
-}
-func (server *Server) AddRoom(roomId uint32, room face.IRoom) {
-	server.roomMap[roomId] = room
-}
-func (server *Server) RemoveRoom(roomId uint32) {
-	delete(server.roomMap, roomId)
-}
 
 //测试用
-func (server *Server) GetAllPlayer() map[uint32]face.ISession {
-	return server.sessionMap
-}
-func InitServerServive(server face.IServer) {
-
-}
-
-func NewServer() face.IServer {
-	server := &Server{
-		IP:    "0.0.0.0:6666",
-		UDPIP: "0.0.0.0:7777",
-		// messageHandle: NewMessageHandler(),
-		sessionMap: make(map[uint32]face.ISession),
-		roomMap:    make(map[uint32]face.IRoom),
-
-		NewSessionSid: 1,
-	}
-
-	return server
-}
 
 func (server *Server) PrintLogo() {
 
@@ -223,4 +155,8 @@ func (server *Server) PrintLogo() {
 		time.Sleep(time.Duration(100) * time.Millisecond)
 	}
 
+}
+
+func ServerStartWork() {
+	singleton.Singleton[Server]().Serve()
 }

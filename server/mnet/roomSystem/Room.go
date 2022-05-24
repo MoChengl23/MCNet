@@ -2,10 +2,10 @@ package roomSystem
 
 import (
 	"server/face"
+	"server/mnet/connectPool"
+	"server/singleton"
 
-	// "server/pb"
-
-	// "server/mnet"
+ 
 
 	"sync"
 )
@@ -28,21 +28,22 @@ type SelectData struct {
 
 //a single room
 type Room struct {
-	server       face.IServer
 	stateMap     map[RoomState]face.IRoomState
 	currentState RoomState
 	roomId       uint32
-	// playerSessions map[face.ISession]bool
+ 
 	playerSessions []face.ISession
 	selectArr      []int
-	// playSelectData []SelectData
-	// selectArr []int32
+	 
 	lock sync.Mutex
+	connectPool *connectPool.ConnectPool
 }
 
 func (room *Room) Init() {
-	// room.server
-	room.server.AddRoom(room.roomId, room)
+	room.connectPool = singleton.Singleton[ connectPool.ConnectPool]()
+	
+
+	room.connectPool.AddRoom(room.roomId, room)
 	// room.server
 
 	// fmt.Println("New Room Init")
@@ -59,7 +60,7 @@ func (room *Room) Init() {
 }
 
 func (room *Room) Delete() {
-	room.server.RemoveRoom(room.roomId)
+	room.connectPool.DeleteRoom(room.roomId)
 
 }
 
@@ -72,15 +73,7 @@ func (room *Room) Broadcast(data []byte) {
 	}
 }
 
-// func (room *Room) SendIndex() {
-
-// 	for index, sid := range room.playerSessions {
-// 		mes := pb.MakeRoomIndex(int32(index))
-// 		room.server.SendMessageToClient(sid, mes)
-// 	}
-
-// }
-
+ 
 func (room *Room) ChangeRoomState(newState int) {
 
 	if int(room.currentState) != newState {
@@ -100,22 +93,7 @@ func (room *Room) ChangePlayersRoomId() {
 	}
 }
 
-// func (room *Room) UpdateConfirm(mes *pb.PbMessage) {
-// 	if room.currentState == roomStateConfirm {
-// 		playerIndex := room.GetPlayerIndex(mes.SId)
-// 		if playerIndex != -1 {
-// 			room.stateMap[roomStateConfirm].Update(playerIndex)
-// 		}
-
-// 	}
-// }
-
-// func (room *Room) UpdateSelect(mes *pb.PbMessage) {
-// 	if room.currentState == roomStateSelect {
-// 		room.stateMap[roomStateSelect].Update(int(mes.PlayerData.PlayerIndex))
-// 	}
-
-// }
+ 
 
 func (room *Room) SendLoadResource() {
 
@@ -150,10 +128,10 @@ func (room *Room) GetCurrentState() face.IRoomState {
 	return room.stateMap[room.currentState]
 }
 
-func NewRoom(_server face.IServer, playerSessions []face.ISession) *Room {
+func NewRoom(playerSessions []face.ISession) *Room {
 
 	newRoom := &Room{
-		server:         _server,
+
 		stateMap:       make(map[RoomState]face.IRoomState),
 		currentState:   roomStateConfirm,
 		roomId:         playerSessions[0].GetSid(),
@@ -164,9 +142,4 @@ func NewRoom(_server face.IServer, playerSessions []face.ISession) *Room {
 	return newRoom
 }
 
-// func AddPlayer(players []uint32) map[face.ISession]boo {
-// 	sessionMap := make(map[face.ISession]bol)
-// 	for _, session := range playerSession {
-// 		sessionMap[session] = fase
-//	}
-// 	return sessionap
+ 

@@ -5,12 +5,10 @@ import (
 	"net"
 
 	"server/face"
-	"server/pb"
 	"server/singleton"
 	"time"
 
 	"github.com/xtaci/kcp-go/v5"
-	"google.golang.org/protobuf/proto"
 )
 
 type Session struct {
@@ -24,7 +22,7 @@ type Session struct {
 
 	messageChan chan []byte
 
-	server face.IServer
+	// server face.IServer
 }
 
 func (session *Session) CheckAlive() {
@@ -59,10 +57,10 @@ func (session *Session) StartReader() {
 			buf[:n],
 			session)
 
-		mes := &pb.PbMessage{}
-		if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
-			fmt.Println(err)
-		}
+		// mes := &pb.PbMessage{}
+		// if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
+		// 	fmt.Println(err)
+		// }
 		singleton.Singleton[WorkerPool]().AddToTaskQueue(request)
 		// session.server.HandleMessage(request)
 
@@ -96,7 +94,8 @@ func (session *Session) Start() {
 func (session *Session) Stop() {
 	session.kcpSession.Close()
 	fmt.Println("session :", session.GetSid(), "STOP")
-	session.server.RemoveSession(session.sid)
+	singleton.Singleton[Server]().RemoveSession(session.sid)
+	// session.server.RemoveSession(session.sid)
 
 	//关闭该链接全部管道
 	close(session.isAlive)
@@ -121,14 +120,14 @@ func (session *Session) GetSid() uint32 {
 func (session *Session) GetRemoteAddress() string {
 	return session.address
 }
-func NewSession(server face.IServer, conn *kcp.UDPSession, sid uint32) face.ISession {
+func NewSession(conn *kcp.UDPSession, sid uint32) face.ISession {
 	session := &Session{
 		sid:         sid,
 		roomId:      0, // 该玩家属于哪个间
 		kcpSession:  conn,
 		isAlive:     make(chan bool),
 		messageChan: make(chan []byte),
-		server:      server,
+		// server:      server,
 	}
 	return session
 }

@@ -8,6 +8,7 @@ type Request struct {
 	message []byte
 
 	session face.ISession
+	 
 }
 
 func (request *Request) GetMessage() []byte {
@@ -19,8 +20,8 @@ func (request *Request) GetSession() face.ISession {
 }
 
 
-func NewRequest(message []byte, session face.ISession) face.IRequest {
-	return &Request{
+func NewRequest(message []byte, session face.ISession) Request {
+	return Request{
 		message: message,
 		session: session,
 	}

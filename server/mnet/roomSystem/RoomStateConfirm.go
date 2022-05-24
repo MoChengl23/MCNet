@@ -60,12 +60,12 @@ func (state *RoomStateConfirm) Update(sesssion face.ISession, mes *pb.PbMessage)
 		// ----------------
 		//测试用
 
-		mes := pb.MakeRoomLoadCmd([]int{})
+		// mes := pb.MakeRoomLoadCmd([]int{})
 		//向玩家发送进入房间命令，和房间成员信息
 
-		state.room.Broadcast(mes)
+		// state.room.Broadcast(mes)
 
-		state.room.ChangeRoomState(int(roomStateLoadResource))
+		state.room.ChangeRoomState(int(roomStateSelect))
 		//=====================
 
 	}
